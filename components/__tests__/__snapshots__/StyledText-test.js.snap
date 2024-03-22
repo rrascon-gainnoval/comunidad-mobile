@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HeaderText/> Renders correctly 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "color": "#575757",
+      },
+      Array [
+        Object {
+          "color": "#42D2B0",
+          "fontSize": 28,
+          "fontWeight": "bold",
+        },
+        Object {
+          "marginHorizontal": 10,
+          "marginVertical": 10,
+        },
+      ],
+    ]
+  }
+>
+  Snapshot test!
+</Text>
+`;
+
+exports[`<MonoText/> Renders correctly 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "color": "#575757",
+      },
+      Array [
+        undefined,
+        Object {
+          "fontFamily": "space-mono",
+        },
+      ],
+    ]
+  }
+>
+  Snapshot test!
+</Text>
+`;

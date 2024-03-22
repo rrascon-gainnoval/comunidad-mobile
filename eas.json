@@ -1,0 +1,29 @@
+{
+  "cli": {
+    "version": ">= 0.52.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "env": {
+        "COMALTA_API_URL": "https://comunidad.gainnoval.com",
+        "GLOBALMET_GA_API_URL": "https://globalmet.mx/api/v2/campo_condiciones_actuales/",
+        "GLOBALMET_RED_API_URL": "http://red.globalmet.mx/api/ws/mediciones/",
+        "GLOBALMET_FORECAST_API_URL": "https://globalmet.mx/api/v2/pronosticos/pronostico_horario/",
+        "GLOBALMET_API_TOKEN": "Token 6d3a27feb6268b76d2f30d0ffe7b598433fcc04c",
+        "ALS_API_URL": "https://als.gainnoval.com/",
+        "ALTATECA_API_URL": "https://api.gainnoval.com",
+        "ALTATECA_WEB_URL": "https://altateca.gainnoval.com/index.php/"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

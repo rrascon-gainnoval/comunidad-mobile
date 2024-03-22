@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "210701759275",
+    "project_id": "comalta-10526",
+    "storage_bucket": "comalta-10526.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210701759275:android:fff1c5afe5a707f12a4b6e",
+        "android_client_info": {
+          "package_name": "com.innoval.comalta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210701759275-gletkcaqjkf4ji9lhi88vef1p1js3js2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdrZuesGRpUdg_sbL3vFKWDhAO_wWCzPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210701759275-gletkcaqjkf4ji9lhi88vef1p1js3js2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
