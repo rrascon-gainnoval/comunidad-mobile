@@ -1,34 +1,34 @@
-import React, { useEffect } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import { TitleText } from "../components/StyledText";
+import { TitleText } from '../components/StyledText';
 
 import {
   Container,
   TextHolder,
   MaterialCommunityIcons,
   View,
-} from "../components/Themed";
+} from '../components/Themed';
 
-import { Loader } from "../components/Loader";
-import { UnavailableContent } from "../components/Unavailable.Content";
+import { Loader } from '../components/Loader';
+import { UnavailableContent } from '../components/Unavailable.Content';
 
-import { alsApi } from "../constants/Backend";
-import { theme } from "../constants/Theme";
-import { useAppContext } from "../App.Provider";
+import { alsApi } from '../constants/Backend';
+import { theme } from '../constants/Theme';
+import { useAppContext } from '../App.Provider';
 
 const campos = [
-  { id: 1, name: "DON ENRIQUE" },
-  { id: 2, name: "LA CUESTA" },
-  { id: 3, name: "DON MARIO" },
-  { id: 4, name: "SANTA LUCIA" },
-  { id: 5, name: "EL COMPA" },
-  { id: 6, name: "CAMPO GRANDE" },
-  { id: 7, name: "LA CASITA" },
-  { id: 8, name: "POZO MANUEL" },
-  { id: 9, name: "ALTA ELVA" },
-  { id: 10, name: "LA CUESTITA" },
-  { id: 11, name: "SANTA LETICIA" },
+  { id: 1, name: 'DON ENRIQUE' },
+  { id: 2, name: 'LA CUESTA' },
+  { id: 3, name: 'DON MARIO' },
+  { id: 4, name: 'SANTA LUCIA' },
+  { id: 5, name: 'EL COMPA' },
+  { id: 6, name: 'CAMPO GRANDE' },
+  { id: 7, name: 'LA CASITA' },
+  { id: 8, name: 'POZO MANUEL' },
+  { id: 9, name: 'ALTA ELVA' },
+  { id: 10, name: 'LA CUESTITA' },
+  { id: 11, name: 'SANTA LETICIA' },
 ];
 
 type AppointmentCreateProps = {
@@ -44,23 +44,21 @@ export const AppointmentCreateScreen = (props: AppointmentCreateProps) => {
 
   const fetchAvailability = async () => {
     const camposNames = campos.map((campo) => campo.name);
-    const locationIndex = camposNames.indexOf(appContext.user.location);
+    const locationIndex = camposNames.indexOf(appContext.user.locationName);
 
     const data = {
       id_campo: campos[locationIndex].id,
       fecha: new Date(),
     };
     alsApi
-      .post("/citas/consultar_disponibilidad", data)
+      .post('/citas/consultar_disponibilidad', data)
       .then((res) => {
         if (mounted) {
           setIsLoading(false);
           setMenu(res.data);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -88,7 +86,7 @@ export const AppointmentCreateScreen = (props: AppointmentCreateProps) => {
               onPress={() => {
                 props.handlePress({
                   officeId: item.id_consultorio,
-                  officeName: item.consultorio.split(" - ")[1],
+                  officeName: item.consultorio.split(' - ')[1],
                   availableSchedules: item.horarios,
                 });
               }}
@@ -97,18 +95,18 @@ export const AppointmentCreateScreen = (props: AppointmentCreateProps) => {
                 <TextHolder style={styles.description}>
                   <MaterialCommunityIcons
                     name={
-                      item.consultorio.includes("DENTAL")
-                        ? "tooth-outline"
-                        : "stethoscope"
+                      item.consultorio.includes('DENTAL')
+                        ? 'tooth-outline'
+                        : 'stethoscope'
                     }
                     size={30}
                   />
                   <TitleText
                     style={{
-                      fontWeight: "normal",
+                      fontWeight: 'normal',
                     }}
                   >
-                    {item.consultorio.split(" - ")[1]}
+                    {item.consultorio.split(' - ')[1]}
                   </TitleText>
                 </TextHolder>
               </Container>
@@ -135,14 +133,14 @@ const styles = StyleSheet.create({
     marginVertical: theme.marginY,
   },
   subtitle: {
-    textAlign: "justify",
+    textAlign: 'justify',
     marginVertical: 20,
   },
   description: {
     padding: 10,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: theme.borderRadius,
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
   },
 });
