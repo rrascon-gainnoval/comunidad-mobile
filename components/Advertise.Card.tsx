@@ -79,9 +79,11 @@ export const AdvertiseCard = (props: AdvertiseCardProps) => {
         start={{ x: 1, y: 0 }}
       >
         <Text style={[styles.text, styles.title]}>{props.title}</Text>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.text}>{props.description}</Text>
-        </View>
+        {props.description && (
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.text}>{props.description}</Text>
+          </View>
+        )}
         {props.terms && (
           <Text style={[styles.text, styles.terms]}>{props.terms}</Text>
         )}
