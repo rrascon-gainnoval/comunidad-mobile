@@ -91,6 +91,7 @@ export default function App() {
               passChanged: userData.pass_changed,
               location: userData.location,
               location_id: userData.location_id,
+              locationName: userData.location_name,
             };
             setUserSession(user);
             storeIsPrivacyTermsSigned(true);
