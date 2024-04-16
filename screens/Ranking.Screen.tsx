@@ -21,16 +21,18 @@ import { UnavailableContent } from '../components/Unavailable.Content';
 import { XpPoints } from '../components/Xp.Points';
 import { User } from '../types';
 
-export const RankingHome = ({ navigation }: any) => {
+export const RankingHome = () => {
   const [ranking, setRanking] = useState<User[]>([]);
   const [selectedItem, setSelectedItem] = useState<string>('mine');
   const [loading, setLoading] = useState<boolean>(true);
 
+  const rankingWithPoints = ranking.filter((item) => item.xp > 0);
+
   const appContext = useAppContext();
 
-  const top1 = ranking[0];
-  const top2 = ranking[1];
-  const top3 = ranking[2];
+  const top1 = rankingWithPoints[0];
+  const top2 = rankingWithPoints[1];
+  const top3 = rankingWithPoints[2];
 
   const fetchRanking = useCallback(async () => {
     setLoading(true);
@@ -99,7 +101,7 @@ export const RankingHome = ({ navigation }: any) => {
       {/* menu end */}
 
       {/* medals start */}
-      {ranking.length > 0 && !loading ? (
+      {rankingWithPoints.length > 0 && !loading ? (
         <>
           <View style={styles.topUsers}>
             <View style={styles.topContainer}>
@@ -152,7 +154,7 @@ export const RankingHome = ({ navigation }: any) => {
             <Text style={styles.bold}>Puntos</Text>
           </View>
 
-          {ranking.map((user: User, index) => (
+          {rankingWithPoints.slice(0, 10).map((user: User, index) => (
             <Container style={styles.userCard} key={user.id}>
               <Text style={styles.bold}>{index + 1}</Text>
               <Image source={{ uri: user.icon }} style={styles.profileIcon} />
