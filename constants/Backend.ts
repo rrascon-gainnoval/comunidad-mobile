@@ -11,8 +11,6 @@ import {
   ALTATECA_WEB_URL,
 } from '@env';
 
-console.log(COMALTA_API_URL);
-
 export const prodURL = COMALTA_API_URL;
 export const testingURL = COMALTA_API_TESTING_URL;
 export const gaWeatherURL = GLOBALMET_GA_API_URL;
@@ -24,7 +22,12 @@ export const backend = axios.create({
   baseURL: prodURL,
 });
 
-export const weatherApi = axios.create();
+export const weatherApi = axios.create({
+  baseURL: gaWeatherURL,
+  headers: {
+    Authorization: gmToken,
+  },
+});
 
 export const forecastApi = axios.create({
   baseURL: forecastURL,

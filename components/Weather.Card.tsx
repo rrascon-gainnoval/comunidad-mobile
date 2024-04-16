@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
 import {
   StyleSheet,
   Image,
   TouchableOpacity,
   LayoutAnimation,
-} from "react-native";
+} from 'react-native';
 
-import { Text, View, TextHolder, Container, MaterialIcons } from "./Themed";
-import { theme } from "../constants/Theme";
+import { Text, View, TextHolder, Container, MaterialIcons } from './Themed';
+import { theme } from '../constants/Theme';
 
 import {
   weatherApi,
@@ -16,14 +16,14 @@ import {
   gaWeatherURL,
   redWeatherURL,
   gmToken,
-} from "../constants/Backend";
-import { useAppContext } from "../App.Provider";
+} from '../constants/Backend';
+import { useAppContext } from '../App.Provider';
 
-import { convertUTCDateToLocalDate } from "../utils/time";
-import { UnavailableContent } from "./Unavailable.Content";
+import { convertUTCDateToLocalDate } from '../utils/time';
+import { UnavailableContent } from './Unavailable.Content';
 
-import moment from "moment";
-import "moment/locale/es";
+import moment from 'moment';
+import 'moment/locale/es';
 
 type WeatherType = {
   temperatura_c: number;
@@ -37,67 +37,72 @@ type ForecastType = {
 } | null;
 
 const dayIcons = [
-  require("../assets/images/clearDay.png"),
-  require("../assets/images/semiCloudyDay.png"),
-  require("../assets/images/semiRainyDay.png"),
-  require("../assets/images/cloudy.png"),
-  require("../assets/images/rainy.png"),
+  require('../assets/images/clearDay.png'),
+  require('../assets/images/semiCloudyDay.png'),
+  require('../assets/images/semiRainyDay.png'),
+  require('../assets/images/cloudy.png'),
+  require('../assets/images/rainy.png'),
 ];
 const nightIcons = [
-  require("../assets/images/clearNight.png"),
-  require("../assets/images/semiCloudyNight.png"),
-  require("../assets/images/semiRainyNight.png"),
-  require("../assets/images/cloudy.png"),
-  require("../assets/images/rainy.png"),
+  require('../assets/images/clearNight.png'),
+  require('../assets/images/semiCloudyNight.png'),
+  require('../assets/images/semiRainyNight.png'),
+  require('../assets/images/cloudy.png'),
+  require('../assets/images/rainy.png'),
 ];
 
 const locationIds = [
-  { id: "7", name: "Don Enrique", weatherApi: gaWeatherURL, token: gmToken },
-  { id: "8", name: "Pozo Manuel", weatherApi: gaWeatherURL, token: gmToken },
-  { id: "127", name: "Santa Lucia", weatherApi: gaWeatherURL, token: gmToken },
-  { id: "429", name: "Don Mario", weatherApi: gaWeatherURL, token: gmToken },
-  { id: "431", name: "La Cuestita", weatherApi: gaWeatherURL, token: gmToken },
+  { id: '7', name: 'Don Enrique', weatherApi: gaWeatherURL, token: gmToken },
+  { id: '8', name: 'Pozo Manuel', weatherApi: gaWeatherURL, token: gmToken },
+  { id: '127', name: 'Santa Lucia', weatherApi: gaWeatherURL, token: gmToken },
+  { id: '429', name: 'Don Mario', weatherApi: gaWeatherURL, token: gmToken },
+  { id: '431', name: 'La Cuestita', weatherApi: gaWeatherURL, token: gmToken },
   {
-    id: "470",
-    name: "Santa Leticia",
+    id: '470',
+    name: 'Santa Leticia',
     weatherApi: gaWeatherURL,
     token: gmToken,
   },
   {
-    id: "540",
-    name: "Don Enrique 2",
+    id: '540',
+    name: 'Don Enrique 2',
     weatherApi: gaWeatherURL,
     token: gmToken,
   },
-  { id: "678", name: "Alta Elva", weatherApi: gaWeatherURL, token: gmToken },
-  { id: "807", name: "La Casita", weatherApi: gaWeatherURL, token: gmToken },
-  { id: "808", name: "El Compa", weatherApi: gaWeatherURL, token: gmToken },
+  { id: '678', name: 'Alta Elva', weatherApi: gaWeatherURL, token: gmToken },
+  { id: '807', name: 'La Casita', weatherApi: gaWeatherURL, token: gmToken },
+  { id: '808', name: 'El Compa', weatherApi: gaWeatherURL, token: gmToken },
   {
-    id: "190/last",
-    name: "La Cuesta",
+    id: '190/last',
+    name: 'La Cuesta',
     weatherApi: redWeatherURL,
-    token: "",
+    token: '',
   },
 ];
 
-export const WeatherCard = (props: any) => {
+export const WeatherCard = () => {
   const appContext = useAppContext();
   let mounted = true;
 
   const [weather, setWeather] = useState<WeatherType>(null);
   const [forecast, setForecast] = useState<ForecastType>(null);
-  const [icons, setIcons] = useState<string>("dayIcons");
-  const [date, setDate] = useState<string>("0000-00-00T00:00:00Z");
+  const [icons, setIcons] = useState<string>('dayIcons');
+  const [date, setDate] = useState<string>('0000-00-00T00:00:00Z');
 
   const location = locationIds.find(
-    (item: any) => item.name.toUpperCase() === appContext.user.location
+    (item: any) => item.name.toUpperCase() === appContext.user.locationName
   );
 
+  console.log(appContext.user);
+
   const fetchWeather = async () => {
+    console.log(weatherApi.defaults.baseURL);
+    console.log(`${location?.weatherApi}${location?.id}/`);
+
     await weatherApi
       .get(`${location?.weatherApi}${location?.id}/`, {
         headers: {
-          Authorization: location?.token ? location.token : "",
+          Authorization: location?.token ? location.token : '',
         },
       })
       .then((response) => {
@@ -108,18 +113,16 @@ export const WeatherCard = (props: any) => {
           ).toISOString()
         );
       })
-      .catch((error) => {
-        console.log(error.response.data);
-      });
+      .catch((error) => {});
   };
 
   const fetchForecast = async () => {
     const today = new Date();
     if (today.getHours() >= 19) {
-      setIcons("nightIcons");
+      setIcons('nightIcons');
     }
     await forecastApi
-      .get(`${location?.id}/?fecha=${today.toISOString().split("T")[0]}`)
+      .get(`${location?.id}/?fecha=${today.toISOString().split('T')[0]}`)
       .then((response) => {
         if (mounted) {
           const data = response.data;
@@ -127,9 +130,7 @@ export const WeatherCard = (props: any) => {
           setForecast(data[data.length - 1]);
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   const handlePress = () => {
@@ -148,7 +149,7 @@ export const WeatherCard = (props: any) => {
 
   const getForecastIcon = (cloudiness: number, precipitation: number) => {
     let iconSet = dayIcons;
-    if (icons === "nightIcons") {
+    if (icons === 'nightIcons') {
       iconSet = nightIcons;
     }
 
@@ -172,7 +173,7 @@ export const WeatherCard = (props: any) => {
       <Container
         style={[
           styles.container,
-          { justifyContent: "center", alignItems: "center" },
+          { justifyContent: 'center', alignItems: 'center' },
         ]}
       >
         <UnavailableContent
@@ -199,14 +200,14 @@ export const WeatherCard = (props: any) => {
         )} °C`}</Text>
       </View>
       <TextHolder style={styles.descriptionContainer}>
-        <Text>{props.location}</Text>
+        <Text>{appContext.user.locationName}</Text>
         <TextHolder style={styles.descriptionText}>
           <Text>
-            {moment(date.split("T")[0]).format("L") +
-              " " +
-              date.split("T")[1].split(":")[0] +
-              ":" +
-              date.split("T")[1].split(":")[1]}
+            {moment(date.split('T')[0]).format('L') +
+              ' ' +
+              date.split('T')[1].split(':')[0] +
+              ':' +
+              date.split('T')[1].split(':')[1]}
           </Text>
           <TouchableOpacity style={styles.retry} onPress={handlePress}>
             <MaterialIcons name="replay" size={20} />
@@ -219,9 +220,9 @@ export const WeatherCard = (props: any) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     height: 100,
     marginHorizontal: theme.marginX,
     marginVertical: theme.marginY,
@@ -231,22 +232,22 @@ const styles = StyleSheet.create({
     height: 45,
   },
   weatherContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   weatherText: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     padding: theme.paddingSm,
   },
   descriptionContainer: {
     padding: theme.paddingSm,
     borderRadius: theme.borderRadius,
   },
-  descriptionText: { flexDirection: "row", alignItems: "center" },
+  descriptionText: { flexDirection: 'row', alignItems: 'center' },
   retry: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginLeft: theme.marginX,
   },
 });
