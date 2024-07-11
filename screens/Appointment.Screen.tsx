@@ -1,28 +1,28 @@
-import React from "react";
+import React from 'react';
 
-import moment from "moment";
-import "moment/locale/es";
+import moment from 'moment';
+import 'moment/locale/es';
 
-import { StyleSheet } from "react-native";
-import { TitleText } from "../components/StyledText";
-import { ChipItem } from "../components/Chip.Item";
+import { StyleSheet } from 'react-native';
+import { TitleText } from '../components/StyledText';
+import { ChipItem } from '../components/Chip.Item';
 
-import DateTimePickerModal from "react-native-modal-datetime-picker";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import {
   ScrollView,
   View,
   MaterialCommunityIcons,
   TextHolder,
-} from "../components/Themed";
+} from '../components/Themed';
 
-import { theme } from "../constants/Theme";
-import { alsApi } from "../constants/Backend";
-import { PrimaryButton } from "../components/Primary.Button";
-import { Loader } from "../components/Loader";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { convertUTCDateToLocalDate } from "../utils/time";
-import { UnavailableContent } from "../components/Unavailable.Content";
+import { theme } from '../constants/Theme';
+import { alsApi } from '../constants/Backend';
+import { PrimaryButton } from '../components/Primary.Button';
+import { Loader } from '../components/Loader';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { convertUTCDateToLocalDate } from '../utils/time';
+import { UnavailableContent } from '../components/Unavailable.Content';
 
 type Time = {
   text: string;
@@ -37,8 +37,8 @@ export const AppointmentScreen = ({ route, navigation }: any) => {
   const [isopen, setIsopen] = React.useState(false);
   const [availableSchedules, setAvailableSchedules] = React.useState([]);
   const [selectedTime, setSelectedTime] = React.useState<Time>({
-    text: "",
-    valor: "",
+    text: '',
+    valor: '',
   });
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -52,16 +52,14 @@ export const AppointmentScreen = ({ route, navigation }: any) => {
       fecha: localDate,
     };
     alsApi
-      .post("/citas/disponibilidadConsultorio", data)
+      .post('/citas/disponibilidadConsultorio', data)
       .then((res) => {
         if (mounted) {
           setAvailableSchedules(res.data);
           setIsLoading(false);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   React.useEffect(() => {
@@ -79,13 +77,13 @@ export const AppointmentScreen = ({ route, navigation }: any) => {
       <TitleText>Fecha:</TitleText>
       <View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
+          flexDirection: 'row',
+          alignItems: 'center',
         }}
       >
         {
           <TitleText style={styles.subtitle}>
-            {moment(date).locale("es-mx").format("LL")}
+            {moment(date).locale('es-mx').format('LL')}
           </TitleText>
         }
         {
@@ -127,18 +125,18 @@ export const AppointmentScreen = ({ route, navigation }: any) => {
           ))}
         </View>
       )}
-      {availableSchedules.length > 0 && selectedTime.valor !== "" && (
+      {availableSchedules.length > 0 && selectedTime.valor !== '' && (
         <PrimaryButton
           text="Agendar cita"
           handlePress={() => {
-            navigation.navigate("AppointmentConfirm", {
+            navigation.navigate('AppointmentConfirm', {
               date: date,
               time: selectedTime,
               office: {
                 name: officeName,
                 id: officeId,
               },
-              type: "create",
+              type: 'create',
             });
           }}
         />
@@ -152,7 +150,7 @@ export const AppointmentScreen = ({ route, navigation }: any) => {
           setIsopen(false);
         }}
         onCancel={() => setIsopen(false)}
-        maximumDate={moment(today).add(2, "month").toDate()}
+        maximumDate={moment(today).add(2, 'month').toDate()}
         minimumDate={today}
       />
     </ScrollView>
@@ -165,8 +163,8 @@ const styles = StyleSheet.create({
   },
   title: {
     margin: theme.marginX,
-    alignItems: "center",
-    textAlign: "center",
+    alignItems: 'center',
+    textAlign: 'center',
   },
   option: {
     margin: theme.marginX,
@@ -178,34 +176,34 @@ const styles = StyleSheet.create({
     marginVertical: theme.marginY,
   },
   datePicker: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginVertical: theme.marginY,
     marginHorizontal: theme.marginX,
-    alignItems: "center",
-    justifyContent: "space-around",
+    alignItems: 'center',
+    justifyContent: 'space-around',
     width: 150,
     padding: theme.paddingSm,
     borderRadius: theme.borderRadius,
   },
   schedule: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignSelf: "center",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignSelf: 'center',
+    justifyContent: 'space-around',
   },
   subtitle: {
-    fontWeight: "normal",
+    fontWeight: 'normal',
   },
   iosDatePicker: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     marginVertical: theme.marginX,
   },
   editButton: {
     padding: theme.paddingSm,
     borderRadius: 100,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: theme.marginX,
   },
   editSize: {

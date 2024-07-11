@@ -31,7 +31,7 @@ export function VotingHomeSrcreen({ navigation }: any) {
         },
       })
       .then((res) => setVotingList(res.data))
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
 
   useEffect(() => {

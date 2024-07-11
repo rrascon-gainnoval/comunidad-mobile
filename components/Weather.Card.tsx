@@ -93,12 +93,7 @@ export const WeatherCard = () => {
     (item: any) => item.name.toUpperCase() === appContext.user.locationName
   );
 
-  console.log(appContext.user);
-
   const fetchWeather = async () => {
-    console.log(weatherApi.defaults.baseURL);
-    console.log(`${location?.weatherApi}${location?.id}/`);
-
     await weatherApi
       .get(`${location?.weatherApi}${location?.id}/`, {
         headers: {

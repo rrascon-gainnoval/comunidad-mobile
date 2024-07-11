@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
 import {
   MaterialCommunityIcons,
@@ -7,17 +7,17 @@ import {
   Text,
   TextHolder,
   View,
-} from "../components/Themed";
-import { backend } from "../constants/Backend";
-import { useAppContext } from "../App.Provider";
-import { TextInput } from "../components/Text.Input";
-import { TitleText } from "../components/StyledText";
-import { theme } from "../constants/Theme";
-import SearchBar from "../components/Search.Bar";
-import { PrimaryButton } from "../components/Primary.Button";
-import { AlertModal } from "../components/Alert.Modal";
-import { errorColor, primaryColor } from "../constants/Colors";
-import { SecondaryButton } from "../components/Secondary.Button";
+} from '../components/Themed';
+import { backend } from '../constants/Backend';
+import { useAppContext } from '../App.Provider';
+import { TextInput } from '../components/Text.Input';
+import { TitleText } from '../components/StyledText';
+import { theme } from '../constants/Theme';
+import SearchBar from '../components/Search.Bar';
+import { PrimaryButton } from '../components/Primary.Button';
+import { AlertModal } from '../components/Alert.Modal';
+import { errorColor, primaryColor } from '../constants/Colors';
+import { SecondaryButton } from '../components/Secondary.Button';
 
 type user = {
   nombre: string;
@@ -37,27 +37,27 @@ export function EventEnrollTeam({ route, navigation }: any) {
   const { event, isEditing } = route.params;
 
   const [users, setUsers] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [showMembers, setShowMembers] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [team, setTeam] = useState<team>({
     id: 0,
-    name: "",
+    name: '',
     members: [
       {
-        nombre: "",
-        apellido: "",
-        id_empleado: "",
+        nombre: '',
+        apellido: '',
+        id_empleado: '',
       },
     ],
     extra: [],
   });
   const [modal, setModal] = useState({
     isVisible: false,
-    icon: "",
-    iconColor: "",
-    text: "",
+    icon: '',
+    iconColor: '',
+    text: '',
   });
 
   const filteredUsers = users.filter((user: user) => {
@@ -66,7 +66,7 @@ export function EventEnrollTeam({ route, navigation }: any) {
 
   const fetchUsers = async () => {
     await backend
-      .post("utils/api/eventos/registro/lista/", {
+      .post('utils/api/eventos/registro/lista/', {
         evento: event.id,
         campo: appUser.location,
       })
@@ -86,7 +86,7 @@ export function EventEnrollTeam({ route, navigation }: any) {
   };
 
   const handlePressMember = (user: user) => {
-    setSearchValue("");
+    setSearchValue('');
     if (team.members.includes(user)) {
       setTeam({
         ...team,
@@ -106,18 +106,18 @@ export function EventEnrollTeam({ route, navigation }: any) {
     if (!team.name) {
       setModal({
         isVisible: true,
-        icon: "alert-circle-outline",
+        icon: 'alert-circle-outline',
         iconColor: errorColor,
-        text: "El nombre de la equipo es requerido",
+        text: 'El nombre de la equipo es requerido',
       });
       return;
     }
     if (team.members.length < 1) {
       setModal({
         isVisible: true,
-        icon: "alert-circle-outline",
+        icon: 'alert-circle-outline',
         iconColor: errorColor,
-        text: "Agrega al menos un integrante",
+        text: 'Agrega al menos un integrante',
       });
       return;
     }
@@ -127,9 +127,9 @@ export function EventEnrollTeam({ route, navigation }: any) {
     if (!isUserInTeam) {
       setModal({
         isVisible: true,
-        icon: "alert-circle-outline",
+        icon: 'alert-circle-outline',
         iconColor: errorColor,
-        text: "Necesitas incluirte en el equipo para poder registrarte",
+        text: 'Necesitas incluirte en el equipo para poder registrarte',
       });
       return;
     }
@@ -137,29 +137,27 @@ export function EventEnrollTeam({ route, navigation }: any) {
       evento: event.id.toString(),
       nombre: team.name,
       integrantes: team.members.map((member: user) => member.id_empleado),
-      adicionales: team.extra.join(","),
+      adicionales: team.extra.join(','),
     };
 
     if (isEditing) {
       try {
-        await backend.post("utils/api/eventos/equipos/update/", {
+        await backend.post('utils/api/eventos/equipos/update/', {
           ...data,
           equipo: team.id,
         });
         setModal({
           isVisible: true,
-          icon: "check-circle",
+          icon: 'check-circle',
           iconColor: primaryColor,
-          text: "Equipo actualizado con éxito!",
+          text: 'Equipo actualizado con éxito!',
         });
       } catch (error) {
-        console.log(error);
-
         setModal({
           isVisible: true,
-          icon: "alert-circle-outline",
+          icon: 'alert-circle-outline',
           iconColor: errorColor,
-          text: "Hubo un error al actualizar el equipo. Intenta mas tarde",
+          text: 'Hubo un error al actualizar el equipo. Intenta mas tarde',
         });
       }
       setIsLoading(false);
@@ -167,19 +165,19 @@ export function EventEnrollTeam({ route, navigation }: any) {
     }
 
     try {
-      await backend.post("utils/api/eventos/registro/", data);
+      await backend.post('utils/api/eventos/registro/', data);
       setModal({
         isVisible: true,
-        icon: "check-circle",
+        icon: 'check-circle',
         iconColor: primaryColor,
-        text: "Equipo registrado con éxito!",
+        text: 'Equipo registrado con éxito!',
       });
     } catch (error) {
       setModal({
         isVisible: true,
-        icon: "alert-circle-outline",
+        icon: 'alert-circle-outline',
         iconColor: errorColor,
-        text: "Hubo un error al registrar el equipo. Intenta mas tarde",
+        text: 'Hubo un error al registrar el equipo. Intenta mas tarde',
       });
     }
     setIsLoading(false);
@@ -188,7 +186,7 @@ export function EventEnrollTeam({ route, navigation }: any) {
   const fetchTeam = async () => {
     try {
       const res = await backend.post(
-        "utils/api/eventos/equipos/detalle/user/",
+        'utils/api/eventos/equipos/detalle/user/',
         {
           evento: event.id,
           id_empleado: appUser.id,
@@ -201,19 +199,17 @@ export function EventEnrollTeam({ route, navigation }: any) {
           name: res.data.nombre,
           extra:
             res.data.adicionales.length > 0
-              ? res.data.adicionales.split(",")
+              ? res.data.adicionales.split(',')
               : [],
         });
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
     if (isEditing) {
       navigation.setOptions({
-        title: "Editar equipo",
+        title: 'Editar equipo',
       });
       fetchTeam();
     }
@@ -263,11 +259,11 @@ export function EventEnrollTeam({ route, navigation }: any) {
             <Text>
               {showMembers ? (
                 <>
-                  <MaterialCommunityIcons name="check" size={16} /> Terminar{" "}
+                  <MaterialCommunityIcons name="check" size={16} /> Terminar{' '}
                 </>
               ) : (
                 <>
-                  <MaterialCommunityIcons name="plus" size={16} /> Agregar{" "}
+                  <MaterialCommunityIcons name="plus" size={16} /> Agregar{' '}
                 </>
               )}
             </Text>
@@ -283,20 +279,20 @@ export function EventEnrollTeam({ route, navigation }: any) {
             style={{ marginVertical: theme.marginX * 2 }}
           />
 
-          {searchValue.split(" ").length > 1 &&
-            searchValue.split(" ")[1] !== "" && (
+          {searchValue.split(' ').length > 1 &&
+            searchValue.split(' ')[1] !== '' && (
               <TouchableOpacity
                 onPress={() => {
                   setTeam({
                     ...team,
                     extra: [...team.extra, searchValue.toLocaleUpperCase()],
                   });
-                  setSearchValue("");
+                  setSearchValue('');
                 }}
               >
                 <TextHolder style={styles.chip}>
                   <MaterialCommunityIcons name="plus-circle" size={20} />
-                  <Text style={{ fontWeight: "bold" }}>
+                  <Text style={{ fontWeight: 'bold' }}>
                     {`  Agregar a ${searchValue.toLocaleUpperCase()}`}
                   </Text>
                 </TextHolder>
@@ -319,7 +315,7 @@ export function EventEnrollTeam({ route, navigation }: any) {
       )}
 
       <PrimaryButton
-        text={isEditing ? "Actualizar" : "Registrar"}
+        text={isEditing ? 'Actualizar' : 'Registrar'}
         handlePress={saveTeam}
         style={{
           marginTop: theme.marginY * 2,
@@ -339,10 +335,10 @@ export function EventEnrollTeam({ route, navigation }: any) {
         icon={modal.icon}
         iconColor={modal.iconColor}
         onPress={() => {
-          if (modal.text.includes("registrado")) {
-            navigation.navigate("EventsHome");
+          if (modal.text.includes('registrado')) {
+            navigation.navigate('EventsHome');
           }
-          if (modal.text.includes("actualizado")) {
+          if (modal.text.includes('actualizado')) {
             navigation.goBack();
           }
           setModal({
@@ -363,16 +359,16 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius,
   },
   membersContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   chip: {
     paddingVertical: theme.paddingSm,
     paddingHorizontal: theme.paddingMd,
     borderRadius: 50,
     margin: theme.marginX / 2,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 });

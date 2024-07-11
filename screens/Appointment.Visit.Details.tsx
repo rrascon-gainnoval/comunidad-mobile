@@ -1,43 +1,43 @@
-import moment from "moment";
-import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
-import { Loader } from "../components/Loader";
-import { TitleText } from "../components/StyledText";
-import { ScrollView, Text, TextHolder, View } from "../components/Themed";
-import { theme } from "../constants/Theme";
-import { FontAwesome, MaterialCommunityIcons } from "@expo/vector-icons";
-import { primaryColor } from "../constants/Colors";
-import { alsApi } from "../constants/Backend";
+import moment from 'moment';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { Loader } from '../components/Loader';
+import { TitleText } from '../components/StyledText';
+import { ScrollView, Text, TextHolder, View } from '../components/Themed';
+import { theme } from '../constants/Theme';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import { primaryColor } from '../constants/Colors';
+import { alsApi } from '../constants/Backend';
 
 const initialDetails = {
   TratamientoDental: [
     {
-      tratamiento: "",
+      tratamiento: '',
     },
   ],
   consulta: {
-    fecha: "",
-    modulo: "",
+    fecha: '',
+    modulo: '',
   },
   diagnosticos: [
     {
-      diagnostico: "",
+      diagnostico: '',
     },
   ],
   placaDental: [
     {
-      procedimiento: "",
-      comentario: "",
+      procedimiento: '',
+      comentario: '',
     },
   ],
   tratamientos: [
     {
-      clave: "",
-      comentario: "",
-      dosis: "",
-      duracion: "",
-      frecuencia: "",
-      medicamento: "",
+      clave: '',
+      comentario: '',
+      dosis: '',
+      duracion: '',
+      frecuencia: '',
+      medicamento: '',
     },
   ],
 };
@@ -48,20 +48,18 @@ export function AppointmentVisitDetails({ route }: { route: any }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const placaDental = details.placaDental.filter(
-    (item: any) => item.tipo_placa !== "0"
+    (item: any) => item.tipo_placa !== '0'
   );
 
   const fetchDetails = useCallback(async () => {
     setIsLoading(true);
     try {
-      const res = await alsApi.post("citas/detalleVisita", {
+      const res = await alsApi.post('citas/detalleVisita', {
         token: detailsToken,
         identificador: visitId,
       });
       setDetails(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
     setIsLoading(false);
   }, [visitId, detailsToken]);
 
@@ -80,14 +78,14 @@ export function AppointmentVisitDetails({ route }: { route: any }) {
             <>
               <View style={styles.top}>
                 <TextHolder style={styles.iconHolder}>
-                  {details.consulta.modulo === "dentista" && (
+                  {details.consulta.modulo === 'dentista' && (
                     <MaterialCommunityIcons
                       name="tooth"
                       size={32}
                       color={primaryColor}
                     />
                   )}
-                  {details.consulta.modulo !== "dentista" && (
+                  {details.consulta.modulo !== 'dentista' && (
                     <FontAwesome
                       name="stethoscope"
                       size={32}
@@ -96,8 +94,8 @@ export function AppointmentVisitDetails({ route }: { route: any }) {
                   )}
                 </TextHolder>
                 <Text>
-                  <Text style={{ fontWeight: "bold" }}>Fecha: </Text>
-                  {moment(details.consulta.fecha).format("ll")}
+                  <Text style={{ fontWeight: 'bold' }}>Fecha: </Text>
+                  {moment(details.consulta.fecha).format('ll')}
                 </Text>
               </View>
 
@@ -142,8 +140,8 @@ export function AppointmentVisitDetails({ route }: { route: any }) {
                   {details.tratamientos.map((item, index) => (
                     <Text key={index} style={{ padding: theme.paddingSm }}>
                       {item.medicamento}
-                      {": "}
-                      {item.dosis} {item.frecuencia.toUpperCase()} POR{" "}
+                      {': '}
+                      {item.dosis} {item.frecuencia.toUpperCase()} POR{' '}
                       {item.duracion} DÍAS.
                     </Text>
                   ))}
@@ -164,8 +162,8 @@ const styles = StyleSheet.create({
   },
   sheet: {
     padding: theme.paddingMd,
-    minHeight: "80%",
-    shadowColor: "#000",
+    minHeight: '80%',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 0,
@@ -175,9 +173,9 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   top: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: theme.marginY * 2,
     paddingHorizontal: theme.paddingSm,
   },

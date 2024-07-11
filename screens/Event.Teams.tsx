@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
-import { Container, ScrollView, Text, View } from "../components/Themed";
-import { backend } from "../constants/Backend";
-import { theme } from "../constants/Theme";
-import { HeaderText, TitleText } from "../components/StyledText";
+import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Container, ScrollView, Text, View } from '../components/Themed';
+import { backend } from '../constants/Backend';
+import { theme } from '../constants/Theme';
+import { HeaderText, TitleText } from '../components/StyledText';
 
 type user = {
   nombre: string;
@@ -22,13 +22,11 @@ export function EventTeams({ route }: any) {
 
   const fetchTeams = async () => {
     try {
-      const res = await backend.post("utils/api/eventos/equipos/list/", {
+      const res = await backend.post('utils/api/eventos/equipos/list/', {
         evento: id,
       });
       setTeams(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -41,7 +39,7 @@ export function EventTeams({ route }: any) {
       <TitleText>{nombre}</TitleText>
       {teams.map((team) => (
         <Container key={team.nombre} style={styles.teamItem}>
-          <Text style={{ fontWeight: "bold", marginBottom: theme.marginX }}>
+          <Text style={{ fontWeight: 'bold', marginBottom: theme.marginX }}>
             {team.nombre}
           </Text>
           {team.integrantes.map((item: user) => (
@@ -51,7 +49,7 @@ export function EventTeams({ route }: any) {
           ))}
           {team.adicionales
             ? team.adicionales
-                .split(",")
+                .split(',')
                 .map((item: string) => <Text>{item}</Text>)
             : null}
         </Container>

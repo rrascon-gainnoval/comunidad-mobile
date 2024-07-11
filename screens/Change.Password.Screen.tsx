@@ -112,9 +112,7 @@ export const ChangePasswordScreen = ({ navigation, route }: any) => {
           signIn(appContext.user.username, password.new);
         }, 1000);
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(() => setIsLoading(false));
   };
 

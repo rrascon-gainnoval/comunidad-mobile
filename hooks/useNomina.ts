@@ -1,15 +1,15 @@
-import axios, { AxiosError } from "axios";
-import { useCallback, useEffect, useState } from "react";
-import { altatecaApi } from "../constants/Backend";
-import { PayrollDetails } from "../types";
-import { currency } from "../utils/Formats";
+import axios, { AxiosError } from 'axios';
+import { useCallback, useEffect, useState } from 'react';
+import { altatecaApi } from '../constants/Backend';
+import { PayrollDetails } from '../types';
+import { currency } from '../utils/Formats';
 
 export function useNomina(employee_code: string) {
   const [details, setDetails] = useState<PayrollDetails>({
-    code: "",
-    net_pay: "",
-    total_deduction: "",
-    total_perception: "",
+    code: '',
+    net_pay: '',
+    total_deduction: '',
+    total_perception: '',
     errorCode: null,
   });
 
@@ -24,8 +24,6 @@ export function useNomina(employee_code: string) {
     } catch (error: any | AxiosError) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status) {
-          console.log(error);
-
           setDetails((prev) => ({
             ...prev,
             errorCode: error.response?.status,

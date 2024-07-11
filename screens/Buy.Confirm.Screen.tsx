@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
-import NetInfo from "@react-native-community/netinfo";
+import NetInfo from '@react-native-community/netinfo';
 
 import {
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   LayoutAnimation,
   Modal,
   Pressable,
-} from "react-native";
+} from 'react-native';
 
 import {
   Container,
@@ -16,19 +16,19 @@ import {
   Text,
   TextHolder,
   View,
-} from "../components/Themed";
+} from '../components/Themed';
 
-import { UvaCoins } from "../components/Uva.Coins";
-import { HeaderText, TitleText } from "../components/StyledText";
-import { SecondaryButton } from "../components/Secondary.Button";
-import { PrimaryButton } from "../components/Primary.Button";
+import { UvaCoins } from '../components/Uva.Coins';
+import { HeaderText, TitleText } from '../components/StyledText';
+import { SecondaryButton } from '../components/Secondary.Button';
+import { PrimaryButton } from '../components/Primary.Button';
 
-import { theme } from "../constants/Theme";
+import { theme } from '../constants/Theme';
 
-import { backend } from "../constants/Backend";
-import { useAppContext } from "../App.Provider";
-import { UnavailableContent } from "../components/Unavailable.Content";
-import { errorColor } from "../constants/Colors";
+import { backend } from '../constants/Backend';
+import { useAppContext } from '../App.Provider';
+import { UnavailableContent } from '../components/Unavailable.Content';
+import { errorColor } from '../constants/Colors';
 
 type isConnected = boolean | null;
 
@@ -38,12 +38,12 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
   const [isCompleted, setIsCompleted] = React.useState(false);
   const [isConnected, setIsConnected] = React.useState<isConnected>(false);
   const [user, setUser] = React.useState<any>();
-  const [error, setError] = React.useState<string>("");
+  const [error, setError] = React.useState<string>('');
 
   const fetchUserDetails = async () => {
     await backend
       .post(
-        "users/user_detail/",
+        'users/user_detail/',
         { id_empleado: appContext.user.id },
         {
           headers: {
@@ -61,11 +61,11 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
 
   const addChestKey = async () => {
     if (user.puntos < 10) {
-      return setError("¡ No tienes suficientes puntos !");
+      return setError('¡ No tienes suficientes puntos !');
     }
     backend
       .put(
-        "users/agregar_llave/",
+        'users/agregar_llave/',
         {
           id_empleado: appContext.user.id,
         },
@@ -78,21 +78,19 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
       .then(() => {
         subPoints();
       })
-      .catch((err) => {
-        console.log("Add llave", err);
-      });
+      .catch((err) => {});
   };
 
   const subPoints = async () => {
     setIsLoading(true);
     backend
       .post(
-        "users/alter_points/",
+        'users/alter_points/',
         {
           id_empleado: appContext.user.id,
           puntos: 10,
-          tipo: "sub",
-          concepto: "Compra de llave para cofre",
+          tipo: 'sub',
+          concepto: 'Compra de llave para cofre',
         },
         {
           headers: {
@@ -110,9 +108,7 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
           }, 1500);
         }, 1500);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -129,13 +125,13 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
       {isConnected ? (
         <>
           <HeaderText>Confirmar </HeaderText>
-          <TitleText style={{ textAlign: "center" }}>
+          <TitleText style={{ textAlign: 'center' }}>
             ¿Seguro que quieres comprar esta llave?
           </TitleText>
           <Container style={styles.keyContainer}>
             <TextHolder style={styles.key}>
               <Image
-                source={require("../assets/images/key.png")}
+                source={require('../assets/images/key.png')}
                 style={
                   isCompleted
                     ? { width: 100, height: 100 }
@@ -144,7 +140,7 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
               />
             </TextHolder>
             {!isCompleted && (
-              <View style={{ alignItems: "center" }}>
+              <View style={{ alignItems: 'center' }}>
                 <TitleText>Esta llave cuesta:</TitleText>
                 <UvaCoins points={10} />
               </View>
@@ -181,7 +177,7 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
         transparent={true}
         visible={error ? true : false}
         onRequestClose={() => {
-          setError("");
+          setError('');
         }}
       >
         <View style={styles.modalContainer}>
@@ -192,7 +188,7 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
               size={80}
             />
             <Text style={styles.error}>{error}</Text>
-            <Pressable style={styles.buttonClose} onPress={() => setError("")}>
+            <Pressable style={styles.buttonClose} onPress={() => setError('')}>
               <Text style={styles.textStyle}>Aceptar</Text>
             </Pressable>
           </View>
@@ -207,12 +203,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   row: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   keyContainer: {
     padding: theme.paddingLg,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     margin: theme.marginX,
   },
   key: {
@@ -220,31 +216,31 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius,
   },
   error: {
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: theme.marginY,
     marginBottom: theme.marginX * 4,
     fontSize: theme.fontSizeLg,
   },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 22,
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.75)",
-    justifyContent: "center",
+    backgroundColor: 'rgba(0,0,0,0.75)',
+    justifyContent: 'center',
   },
   modalView: {
     borderRadius: theme.borderRadius,
     padding: theme.paddingLg,
     marginHorizontal: theme.marginX * 2,
     marginBottom: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -256,15 +252,15 @@ const styles = StyleSheet.create({
   buttonClose: {
     borderRadius: theme.borderRadius,
     padding: theme.paddingSm,
-    backgroundColor: "#2196F3",
+    backgroundColor: '#2196F3',
   },
   textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   modalText: {
     marginBottom: 15,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Comunidad",
     "slug": "comalta",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -17,7 +17,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "1.4.4",
+      "buildNumber": "1.4.5",
       "supportsTablet": true,
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Permite acceder a la galería de fotos para subir imágenes"
@@ -25,7 +25,7 @@
       "bundleIdentifier": "com.innoval.comalta"
     },
     "android": {
-      "versionCode": 9,
+      "versionCode": 10,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"

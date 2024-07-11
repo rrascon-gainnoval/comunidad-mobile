@@ -46,7 +46,7 @@ export function EventsHomeScreen({ navigation }: any) {
       .then((res) => {
         setEvents(res.data);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {})
       .finally(() => setIsLoading(false));
   };
 

@@ -138,9 +138,7 @@ export function ProfileScreen({ navigation }: any) {
           setUser({ ...user, icon: image.uri });
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   const pickImage = async () => {

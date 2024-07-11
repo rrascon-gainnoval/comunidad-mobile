@@ -38,9 +38,7 @@ export function ImageGallery(props: any) {
       await Sharing.shareAsync(imageTmp.uri, {
         dialogTitle: shareText,
       });
-    } catch (error) {
-      console.log('error');
-    }
+    } catch (error) {}
   };
 
   return (

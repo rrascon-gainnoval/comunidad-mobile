@@ -5,7 +5,6 @@ import { useAppContext } from '../App.Provider';
 import { TitleText } from '../components/StyledText';
 import { Container, View } from '../components/Themed';
 import { theme } from '../constants/Theme';
-
 import Barcode from 'react-native-barcode-expo';
 
 export function DigitalBadge() {
@@ -24,7 +23,9 @@ export function DigitalBadge() {
           style={styles.logo}
           source={require('../assets/images/ga.png')}
         />
-        {/* <QRCode size={150} value={user.id} /> */}
+        <TitleText>
+          {user.name} {user.lastname}
+        </TitleText>
         <Container style={styles.imgContainer}>
           <Image
             resizeMode="contain"
@@ -35,14 +36,10 @@ export function DigitalBadge() {
             source={{ uri: user.profileImage }}
           />
         </Container>
-
-        <Barcode value={userId} format="CODE128" height={40} />
-
-        <TitleText style={styles.title}>
-          {user.name} {user.lastname}
+        <Barcode height={40} value="Hello World" format="CODE128" />
+        <TitleText style={{ fontWeight: 'normal', marginTop: 0 }}>
+          {userId}
         </TitleText>
-        <TitleText style={{ fontWeight: 'normal' }}>{userId}</TitleText>
-
         <Image
           resizeMode="contain"
           style={styles.footer}
@@ -85,5 +82,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: theme.marginY * 2,
   },
-  title: { marginTop: theme.marginY * 3, marginBottom: 0 },
 });

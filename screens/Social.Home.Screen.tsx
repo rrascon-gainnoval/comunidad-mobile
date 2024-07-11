@@ -152,9 +152,7 @@ export const SocialHomeScreen = () => {
           setBirthdayList([...res.data]);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const sendCongrats = async (birth_day_user_id: string) => {
@@ -173,9 +171,7 @@ export const SocialHomeScreen = () => {
       .then(() => {
         fetchBirthdayList();
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const fetchData = () => {
