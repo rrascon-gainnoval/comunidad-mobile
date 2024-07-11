@@ -5,7 +5,7 @@ import { useAppContext } from '../App.Provider';
 import { TitleText } from '../components/StyledText';
 import { Container, View } from '../components/Themed';
 import { theme } from '../constants/Theme';
-import Barcode from 'react-native-barcode-expo';
+import { Barcode } from 'expo-barcode-generator';
 
 export function DigitalBadge() {
   const { user } = useAppContext();
@@ -33,13 +33,14 @@ export function DigitalBadge() {
               width: 150,
               height: 150,
             }}
+            height={2}
             source={{ uri: user.profileImage }}
           />
         </Container>
-        <Barcode height={40} value="Hello World" format="CODE128" />
-        <TitleText style={{ fontWeight: 'normal', marginTop: 0 }}>
-          {userId}
-        </TitleText>
+        <Barcode
+          value={userId}
+          options={{ format: 'CODE128', background: 'white', height: 60 }}
+        />
         <Image
           resizeMode="contain"
           style={styles.footer}

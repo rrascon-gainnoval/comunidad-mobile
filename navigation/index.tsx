@@ -35,7 +35,6 @@ import { ChestScreen } from '../screens/Chest.Screen';
 import { RankingHome } from '../screens/Ranking.Screen';
 
 import { RootStackParamList, RootTabParamList } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
 import { AppointmentMenuScreen } from '../screens/Appointment.Menu.Screen';
 import { AppointmentScreen } from '../screens/Appointment.Screen';
 import { AppointmentConfirmScreen } from '../screens/Appointment.Confirm.Screen';
@@ -66,10 +65,7 @@ import { WalletModifyPin } from '../screens/Wallet.ModifyPin.Screen';
 export default function Navigation() {
   const { appTheme } = React.useContext(ThemeContext);
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={appTheme === 'dark' ? DarkTheme : DefaultTheme}
-    >
+    <NavigationContainer theme={appTheme === 'dark' ? DarkTheme : DefaultTheme}>
       <DrawerNavigator />
       <StatusBar style={appTheme === 'dark' ? 'light' : 'dark'} />
     </NavigationContainer>
