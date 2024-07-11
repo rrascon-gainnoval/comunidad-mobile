@@ -15,7 +15,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "buildNumber": "1.4.5",
       "supportsTablet": true,
@@ -30,7 +32,11 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA", "CAMERA_ROLL", "RECEIVE_BOOT_COMPLETED"],
+      "permissions": [
+        "CAMERA",
+        "CAMERA_ROLL",
+        "RECEIVE_BOOT_COMPLETED"
+      ],
       "package": "com.innoval.comalta",
       "googleServicesFile": "./google-services.json",
       "icon": "./assets/images/icon.png"
@@ -43,6 +49,9 @@
         "projectId": "e016f192-5c02-4ba5-80c5-4dd48f9d8cbe"
       }
     },
-    "owner": "innoval"
+    "owner": "innoval",
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
