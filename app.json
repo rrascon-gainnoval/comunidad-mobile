@@ -51,7 +51,8 @@
     },
     "owner": "innoval",
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-asset"
     ]
   }
 }
