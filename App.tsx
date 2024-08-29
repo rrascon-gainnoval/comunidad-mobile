@@ -75,6 +75,7 @@ export default function App() {
           .post('api/token/', { username, password })
           .then(async (response) => {
             const userData = response.data;
+
             user = {
               id: userData.id,
               username: userData.username,
@@ -92,6 +93,9 @@ export default function App() {
               location: userData.location,
               location_id: userData.location_id,
               locationName: userData.location_name,
+              apellido_paterno_empleado: userData.last_name,
+              apellido_materno_empleado: userData.second_lastname,
+              fecha_nacimiento_empleado: userData.fecha_nacimiento_empleado,
             };
             setUserSession(user);
             storeIsPrivacyTermsSigned(true);

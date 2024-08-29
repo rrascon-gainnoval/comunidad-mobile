@@ -61,6 +61,7 @@ import { PodcastHomeScreen } from '../screens/Podcast.Home.Screen';
 import { WalletSignature } from '../screens/Wallet.Signature.Screen';
 import { WalletCreatePin } from '../screens/Wallet.CreatePin';
 import { WalletModifyPin } from '../screens/Wallet.ModifyPin.Screen';
+import { OrganoMixtoScreen } from '../screens/Organo.Mixto.Screen';
 
 export default function Navigation() {
   const { appTheme } = React.useContext(ThemeContext);
@@ -208,6 +209,23 @@ function DrawerNavigator() {
           },
         }}
       />
+      <Drawer.Screen
+        name="Órgano mixto"
+        component={OrganoMixtoScreen}
+        options={{
+          headerShadowVisible: false,
+          drawerIcon: (props) => {
+            return (
+              <MaterialCommunityIcons
+                name="gamepad-circle"
+                size={24}
+                color={props.color}
+              />
+            );
+          },
+        }}
+      />
+
       <Drawer.Screen
         name="Ayuda"
         component={ChatbotScreen}

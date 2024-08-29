@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     padding: theme.paddingMd,
     flexDirection: 'row',
     alignItems: 'center',
-    flexGrow: 1,
     gap: theme.paddingSm,
   },
   warningText: {

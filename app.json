@@ -2,7 +2,7 @@
   "expo": {
     "name": "Comunidad",
     "slug": "comalta",
-    "version": "1.4.5",
+    "version": "1.4.6",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -15,11 +15,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "1.4.5",
+      "buildNumber": "1.4.6",
       "supportsTablet": true,
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Permite acceder a la galería de fotos para subir imágenes"
@@ -27,16 +25,12 @@
       "bundleIdentifier": "com.innoval.comalta"
     },
     "android": {
-      "versionCode": 10,
+      "versionCode": 11,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "CAMERA",
-        "CAMERA_ROLL",
-        "RECEIVE_BOOT_COMPLETED"
-      ],
+      "permissions": ["CAMERA", "CAMERA_ROLL", "RECEIVE_BOOT_COMPLETED"],
       "package": "com.innoval.comalta",
       "googleServicesFile": "./google-services.json",
       "icon": "./assets/images/icon.png"
@@ -50,9 +44,6 @@
       }
     },
     "owner": "innoval",
-    "plugins": [
-      "expo-font",
-      "expo-asset"
-    ]
+    "plugins": ["expo-font", "expo-asset"]
   }
 }
