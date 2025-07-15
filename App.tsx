@@ -29,6 +29,10 @@ import { ChangePasswordScreen } from './screens/Change.Password.Screen';
 import { ThemeProvider } from './Theme.Provider';
 import { storeIsPrivacyTermsSigned } from './utils/storage';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+
 if (Platform.OS === 'android') {
   UIManager.setLayoutAnimationEnabledExperimental &&
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -96,6 +100,7 @@ export default function App() {
               apellido_paterno_empleado: userData.last_name,
               apellido_materno_empleado: userData.second_lastname,
               fecha_nacimiento_empleado: userData.fecha_nacimiento_empleado,
+              icon: userData.icon,
             };
             setUserSession(user);
             storeIsPrivacyTermsSigned(true);

@@ -34,7 +34,11 @@ export function DigitalBadge() {
               height: 150,
             }}
             height={2}
-            source={{ uri: user.profileImage }}
+            source={
+              user.icon
+                ? { uri: user.icon }
+                : require('../assets/images/profile.png')
+            }
           />
         </Container>
         <Barcode

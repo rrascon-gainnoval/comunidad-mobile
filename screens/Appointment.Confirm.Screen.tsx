@@ -80,7 +80,7 @@ export const AppointmentConfirmScreen = ({ navigation, route }: any) => {
           id_consultorio: office.id,
           fecha: date,
           hora: time.valor,
-          nomina: appContext.user.id,
+          nomina: appContext.user.username,
           nombre: `${appContext.user.name} ${appContext.user.lastname}`,
         })
         .then((res) => {

@@ -127,7 +127,7 @@ function DrawerNavigator() {
           },
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Podcast"
         component={PodcastHomeScreen}
         options={{
@@ -143,7 +143,7 @@ function DrawerNavigator() {
             );
           },
         }}
-      />
+      /> */}
       <Drawer.Screen
         name="Diccionario"
         component={DictionaryHomeScreen}
@@ -161,7 +161,7 @@ function DrawerNavigator() {
         }}
       />
 
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Productos tienda"
         component={StoreProductsScreen}
         options={{
@@ -176,7 +176,7 @@ function DrawerNavigator() {
             );
           },
         }}
-      />
+      /> */}
       <Drawer.Screen
         name="Credencial"
         component={DigitalBadge}

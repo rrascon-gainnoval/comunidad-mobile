@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import moment from "moment";
+import React, { useCallback, useEffect, useRef } from 'react';
+import moment from 'moment';
 
-import { Image, StyleSheet, TouchableOpacity, Animated } from "react-native";
-import { Text, Container, TextHolder } from "./Themed";
+import { Image, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { Text, Container, TextHolder } from './Themed';
 
-import { theme } from "../constants/Theme";
+import { theme } from '../constants/Theme';
 const { paddingSm, marginX } = theme;
 
 export function NominaDirectAccess({
@@ -12,7 +12,7 @@ export function NominaDirectAccess({
 }: {
   handlePress: () => void;
 }) {
-  const isSaturday = moment().get("day") === 6; //6 is saturday
+  const isSaturday = moment().get('day') === 6; //6 is saturday
   const shakeAnim = useRef(new Animated.Value(0)).current;
 
   const shake = useCallback(() => {
@@ -66,7 +66,7 @@ export function NominaDirectAccess({
           <Image
             style={styles.img}
             resizeMode="contain"
-            source={require("../assets/images/money.png")}
+            source={require('../assets/images/money.png')}
           />
         </Animated.View>
         <TextHolder style={{ padding: paddingSm }}>
@@ -84,10 +84,10 @@ const styles = StyleSheet.create({
     paddingVertical: theme.paddingLg,
     borderRadius: theme.borderRadius,
     margin: marginX,
-    alignItems: "center",
+    alignItems: 'center',
   },
 
-  text: { fontWeight: "bold" },
+  text: { fontWeight: 'bold' },
   img: {
     height: 50,
   },

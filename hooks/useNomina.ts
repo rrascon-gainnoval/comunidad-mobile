@@ -31,7 +31,6 @@ export function useNomina(employee_code: string) {
           return;
         }
       }
-      console.error(error);
     }
   }, [employee_code]);
 

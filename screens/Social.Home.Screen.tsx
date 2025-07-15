@@ -43,12 +43,12 @@ export const SocialHomeScreen = () => {
         },
       })
       .then((response) => {
+        setMoods([...response.data]);
+        setIsFetching(false);
         if (mounted) {
-          setMoods(response.data);
-          setIsFetching(false);
         }
       })
-      .catch(() => {
+      .catch((err) => {
         if (mounted) {
           setIsFetching(false);
         }
@@ -78,6 +78,8 @@ export const SocialHomeScreen = () => {
         }, 500);
       })
       .catch((error) => {
+        console.log(error);
+
         if (mounted) {
           setIsLoading(false);
           setError(error.response.data);
@@ -152,7 +154,9 @@ export const SocialHomeScreen = () => {
           setBirthdayList([...res.data]);
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const sendCongrats = async (birth_day_user_id: string) => {

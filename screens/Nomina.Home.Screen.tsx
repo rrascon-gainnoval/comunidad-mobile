@@ -1,14 +1,14 @@
-import React from "react";
-import { StyleSheet, Image } from "react-native";
-import { TitleText } from "../components/StyledText";
-import { View, TextHolder, Text } from "../components/Themed";
-import { usePreventScreenCapture } from "expo-screen-capture";
+import React from 'react';
+import { StyleSheet, Image } from 'react-native';
+import { TitleText } from '../components/StyledText';
+import { View, TextHolder, Text } from '../components/Themed';
+import { usePreventScreenCapture } from 'expo-screen-capture';
 
-import { theme } from "../constants/Theme";
-import { errorColor, primaryColor } from "../constants/Colors";
-import { useNomina } from "../hooks/useNomina";
-import { useAppContext } from "../App.Provider";
-import { UnavailableContent } from "../components/Unavailable.Content";
+import { theme } from '../constants/Theme';
+import { errorColor, primaryColor } from '../constants/Colors';
+import { useNomina } from '../hooks/useNomina';
+import { useAppContext } from '../App.Provider';
+import { UnavailableContent } from '../components/Unavailable.Content';
 
 export function PaperCutting() {
   return (
@@ -26,7 +26,8 @@ export function PaperCutting() {
 export function NominaHomeScreen() {
   usePreventScreenCapture();
   const { user } = useAppContext();
-  const nomina = useNomina(user.id);
+  //const nomina = useNomina(user.id);
+  const nomina = useNomina('000028');
   const { errorCode, total_perception, total_deduction, net_pay } = nomina;
 
   if (errorCode === 404) {
@@ -48,7 +49,7 @@ export function NominaHomeScreen() {
 
         <Image
           style={styles.image}
-          source={require("../assets/images/money.png")}
+          source={require('../assets/images/money.png')}
         />
         <TitleText style={styles.title}>Detalle de tu nómina</TitleText>
         <TextHolder style={styles.separator} />
@@ -81,7 +82,7 @@ export function NominaHomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     paddingHorizontal: theme.paddingMd,
   },
   payrollContainer: {
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     margin: theme.marginX,
     height: 500,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 10,
@@ -108,40 +109,40 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   cuttingContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: -20,
-    flexDirection: "row",
-    backgroundColor: "rgba(52, 52, 52, 0)",
+    flexDirection: 'row',
+    backgroundColor: 'rgba(52, 52, 52, 0)',
   },
   row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: theme.marginY * 3,
   },
   title: {
-    alignSelf: "center",
+    alignSelf: 'center',
     marginBottom: theme.marginY * 2,
   },
   total: {
     marginHorizontal: 0,
-    fontWeight: "normal",
+    fontWeight: 'normal',
   },
-  bottom: { marginTop: "auto" },
+  bottom: { marginTop: 'auto' },
   separator: {
-    width: "100%",
+    width: '100%',
     height: 3,
     marginBottom: theme.marginY,
   },
   bold: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginHorizontal: 0,
     marginVertical: 0,
   },
   image: {
     height: 80,
     width: 80,
-    resizeMode: "contain",
-    alignSelf: "center",
+    resizeMode: 'contain',
+    alignSelf: 'center',
   },
   netPay: {
     fontSize: 24,

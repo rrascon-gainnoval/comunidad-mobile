@@ -1,19 +1,22 @@
-import { ActivityIndicator, Image, StyleSheet } from 'react-native';
+import { ActivityIndicator, Image, LogBox, StyleSheet } from 'react-native';
 import { Text, View } from '../components/Themed';
 import { theme } from '../constants/Theme';
 import { HeaderText } from '../components/StyledText';
 import { PrimaryButton } from '../components/Primary.Button';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Barcode } from 'expo-barcode-generator';
 import { useAppContext } from '../App.Provider';
 import { backend } from '../constants/Backend';
 import { Loader } from '../components/Loader';
 import { AlertMessage } from '../components/Alert.Message';
+import { UnavailableContent } from '../components/Unavailable.Content';
+import { useFocusEffect } from '@react-navigation/native';
 
 export const OrganoMixtoScreen = () => {
   const { user } = useAppContext();
   const [fetching, setFetching] = useState<boolean>(false);
   const [creating, setCreating] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(true);
   const [promoCode, setPromoCode] = useState<string>('');
   //TO DO:
   //Buscar la ultima solicitud valida del usuario ✅
@@ -57,16 +60,22 @@ export const OrganoMixtoScreen = () => {
       );
       if (res.data && res.data.codigo_promo) {
         setPromoCode(res.data.codigo_promo);
+      } else {
+        setPromoCode('');
       }
+      setError(false);
     } catch (error) {
+      setError(true);
     } finally {
       setFetching(false);
     }
   };
 
-  useEffect(() => {
-    validateRequest();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      validateRequest();
+    }, [])
+  );
 
   if (fetching) {
     return (
@@ -76,12 +85,20 @@ export const OrganoMixtoScreen = () => {
     );
   }
 
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <UnavailableContent onPressRetry={validateRequest} />
+      </View>
+    );
+  }
+
   if (promoCode)
     return (
       <View style={styles.container}>
         <HeaderText>¡Ya puedes aplicar tu descuento!</HeaderText>
         <Text>
-          Puedes ir a la tienda y mostrar el código para aplicar tu descuento.
+          Puedes mostrar este código en la tienda para aplicar tu descuento.
         </Text>
         <AlertMessage>
           <Text>Este código puede ser canjeado sólo una vez</Text>
@@ -109,13 +126,11 @@ export const OrganoMixtoScreen = () => {
   return (
     <View style={styles.container}>
       <HeaderText>¡Solicita un descuento para termo de agua!</HeaderText>
-      <Text>
-        Puedes solicitar un nuevo descuento para el termo de agua cada año.
-      </Text>
+      <Text>Recuerda que puedes solicitar un descuento cada 6 meses.</Text>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Image
           resizeMode="contain"
-          source={require('../assets/images/chest.png')}
+          source={require('../assets/images/termo.png')}
           style={styles.image}
         />
       </View>
@@ -137,7 +152,7 @@ const styles = StyleSheet.create({
     gap: theme.paddingSm,
   },
   image: {
-    height: 190,
-    width: 300,
+    height: 190 * 1.5,
+    width: 300 * 1.5,
   },
 });

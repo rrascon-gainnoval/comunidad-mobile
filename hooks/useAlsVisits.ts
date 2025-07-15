@@ -25,7 +25,7 @@ export function useAlsVisits() {
     setIsLoading(true);
     try {
       const res = await alsApi.get(
-        `citas/historial/${appContext.user.id}`
+        `citas/historial/${appContext.user.username}`
         //"citas/historial/230250"
       );
 
