@@ -83,11 +83,7 @@ export function ProfileScreen({ navigation }: any) {
 
   const fetchUserDetails = async () => {
     await backend
-      .get(`api/usuarios/${appContext.user.id}/`, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get(`api/usuarios/${appContext.user.id}/`)
       .then((response) => {
         if (mounted) {
           setUser(response.data);
@@ -123,7 +119,6 @@ export function ProfileScreen({ navigation }: any) {
       url: 'users/user_detail/',
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${appContext.user.token.access}`,
       },
       transformRequest: (data, headers) => {
         return data;

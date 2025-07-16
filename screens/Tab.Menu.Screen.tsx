@@ -1,45 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { StyleSheet, LayoutAnimation } from "react-native";
-import { ScrollView, View, Text } from "../components/Themed";
+import { StyleSheet, LayoutAnimation } from 'react-native';
+import { ScrollView, View, Text } from '../components/Themed';
 
-import { MenuItemCard } from "../components/MenuItem.Card";
-import { LinkButton } from "../components/Link.Button";
-import { CategoryFilter } from "../components/Category.Filter";
-import { Loader } from "../components/Loader";
-import { UnavailableContent } from "../components/Unavailable.Content";
-import { HeaderText } from "../components/StyledText";
-import { MenuWeekPicker } from "../components/Menu.Week.Picker";
+import { MenuItemCard } from '../components/MenuItem.Card';
+import { LinkButton } from '../components/Link.Button';
+import { CategoryFilter } from '../components/Category.Filter';
+import { Loader } from '../components/Loader';
+import { UnavailableContent } from '../components/Unavailable.Content';
+import { HeaderText } from '../components/StyledText';
+import { MenuWeekPicker } from '../components/Menu.Week.Picker';
 
-import { backend } from "../constants/Backend";
+import { backend } from '../constants/Backend';
 
-import { CategoryFilterType } from "../types";
+import { CategoryFilterType } from '../types';
 
-import { useAppContext, getMenuSurvey, setMenuSurvey } from "../App.Provider";
+import { useAppContext, getMenuSurvey, setMenuSurvey } from '../App.Provider';
 
 const weekDays: string[] = [
-  "Lunes",
-  "Martes",
-  "Miércoles",
-  "Jueves",
-  "Viernes",
-  "Sábado",
-  "Domingo",
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+  'Sábado',
+  'Domingo',
 ];
 
 const categories: CategoryFilterType[] = [
-  { name: "Desayuno", icon: "free-breakfast" },
-  { name: "Comida", icon: "lunch-dining" },
-  { name: "Cena", icon: "nightlight-round" },
+  { name: 'Desayuno', icon: 'free-breakfast' },
+  { name: 'Comida', icon: 'lunch-dining' },
+  { name: 'Cena', icon: 'nightlight-round' },
 ];
 
 export function TabMenuScreen({ navigation }: any) {
   const appContext = useAppContext();
 
-  const [mealType, setMealType] = useState<string>("Desayuno");
+  const [mealType, setMealType] = useState<string>('Desayuno');
   const [meals, setMeals] = useState<any>([]);
   const [isFetching, setIsfetching] = useState<boolean>(true);
-  const [selectedWeek, setSelectedWeek] = useState<string>("current");
+  const [selectedWeek, setSelectedWeek] = useState<string>('current');
   let mounted = true;
   /**
    * post data hardcoded
@@ -49,16 +49,12 @@ export function TabMenuScreen({ navigation }: any) {
     const data = { campo: appContext.user.location };
 
     await backend
-      .post("menus/get_menu/", data, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .post('menus/get_menu/', data)
       .then((response) => {
         if (mounted) {
           LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
           setMeals(response.data[0].platillos);
-          if (selectedWeek === "next") {
+          if (selectedWeek === 'next') {
             setMeals(response.data[1].platillos);
           }
           setIsfetching(false);
@@ -73,11 +69,11 @@ export function TabMenuScreen({ navigation }: any) {
 
   const checkForSurvey = async () => {
     const isSurvey = await getMenuSurvey();
-    if (isSurvey === "true") {
-      navigation.navigate("SatisfactionSurvey", {
-        topic: "Menu",
+    if (isSurvey === 'true') {
+      navigation.navigate('SatisfactionSurvey', {
+        topic: 'Menu',
       });
-      setMenuSurvey("done");
+      setMenuSurvey('done');
     }
   };
 
@@ -100,8 +96,8 @@ export function TabMenuScreen({ navigation }: any) {
           </HeaderText>
           <MenuWeekPicker
             selectedWeek={selectedWeek}
-            pressCurrent={() => setSelectedWeek("current")}
-            pressNext={() => setSelectedWeek("next")}
+            pressCurrent={() => setSelectedWeek('current')}
+            pressNext={() => setSelectedWeek('next')}
           />
           <CategoryFilter
             categories={categories}
@@ -115,16 +111,16 @@ export function TabMenuScreen({ navigation }: any) {
               key={index}
               weekDay={item}
               meal={
-                mealType === "Desayuno"
+                mealType === 'Desayuno'
                   ? meals[index]?.desayuno.nombre
-                  : mealType === "Comida"
+                  : mealType === 'Comida'
                   ? meals[index]?.comida.nombre
                   : meals[index]?.cena.nombre
               }
               image={
-                mealType === "Desayuno"
+                mealType === 'Desayuno'
                   ? { uri: meals[index]?.desayuno.imagen }
-                  : mealType === "Comida"
+                  : mealType === 'Comida'
                   ? { uri: meals[index]?.comida.imagen }
                   : { uri: meals[index]?.cena.imagen }
               }
@@ -137,8 +133,8 @@ export function TabMenuScreen({ navigation }: any) {
           <LinkButton
             text="¿Quieres proponer algún platillo?"
             handlePress={() => {
-              navigation.navigate("Suggestions", {
-                topic: "Menu",
+              navigation.navigate('Suggestions', {
+                topic: 'Menu',
               });
             }}
           />
@@ -150,8 +146,8 @@ export function TabMenuScreen({ navigation }: any) {
           </HeaderText>
           <MenuWeekPicker
             selectedWeek={selectedWeek}
-            pressCurrent={() => setSelectedWeek("current")}
-            pressNext={() => setSelectedWeek("next")}
+            pressCurrent={() => setSelectedWeek('current')}
+            pressNext={() => setSelectedWeek('next')}
           />
           <UnavailableContent
             content="Menú"
@@ -167,18 +163,18 @@ export function TabMenuScreen({ navigation }: any) {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loader: {
-    alignSelf: "center",
+    alignSelf: 'center',
   },
   retry: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   header: {
     marginVertical: 20,
   },
-  terms: { textAlign: "center", marginBottom: 20 },
+  terms: { textAlign: 'center', marginBottom: 20 },
 });

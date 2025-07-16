@@ -1,12 +1,12 @@
-import { Image, RefreshControl, StyleSheet } from "react-native";
-import React from "react";
-import { Container, ScrollView, Text } from "../components/Themed";
-import { theme } from "../constants/Theme";
-import { UvaCoins } from "../components/Uva.Coins";
-import { backend } from "../constants/Backend";
-import { Loader } from "../components/Loader";
-import { useAppContext } from "../App.Provider";
-import { errorColor } from "../constants/Colors";
+import { Image, RefreshControl, StyleSheet } from 'react-native';
+import React from 'react';
+import { Container, ScrollView, Text } from '../components/Themed';
+import { theme } from '../constants/Theme';
+import { UvaCoins } from '../components/Uva.Coins';
+import { backend } from '../constants/Backend';
+import { Loader } from '../components/Loader';
+import { useAppContext } from '../App.Provider';
+import { errorColor } from '../constants/Colors';
 
 type product = {
   id: number;
@@ -25,15 +25,9 @@ export function StoreProductsScreen() {
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
-      const res = await backend.post(
-        "/pos/get_productos/",
-        { campo: appContext.user.location },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      );
+      const res = await backend.post('/pos/get_productos/', {
+        campo: appContext.user.location,
+      });
       setProducts([...res.data]);
     } catch (error) {}
     setIsLoading(false);
@@ -59,20 +53,20 @@ export function StoreProductsScreen() {
             }}
             style={styles.image}
           />
-          <Text style={{ fontWeight: "bold" }}>{product.nombre}</Text>
+          <Text style={{ fontWeight: 'bold' }}>{product.nombre}</Text>
           <UvaCoins isSmall={true} points={product.precio} />
           <Text
             style={[
-              { position: "absolute", left: 10, top: 10 },
+              { position: 'absolute', left: 10, top: 10 },
               product.cantidad === 0 && {
                 color: errorColor,
-                fontWeight: "bold",
+                fontWeight: 'bold',
               },
             ]}
           >
             {product.cantidad > 0
               ? `Disponibles: ${product.cantidad}`
-              : "Agotado"}
+              : 'Agotado'}
           </Text>
         </Container>
       ))}
@@ -93,7 +87,7 @@ const styles = StyleSheet.create({
     marginHorizontal: theme.marginX,
     marginVertical: theme.marginY,
     padding: theme.paddingSm,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

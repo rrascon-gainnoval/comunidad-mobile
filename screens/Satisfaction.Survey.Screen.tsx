@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 
 import {
   StyleSheet,
@@ -6,42 +6,42 @@ import {
   TouchableOpacity,
   LayoutAnimation,
   Image,
-} from "react-native";
-import { TextHolder, View, Text } from "../components/Themed";
-import { HeaderText, TitleText } from "../components/StyledText";
-import { TextArea } from "../components/Text.Area";
-import { LinkButton } from "../components/Link.Button";
-import { PrimaryButton } from "../components/Primary.Button";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+} from 'react-native';
+import { TextHolder, View, Text } from '../components/Themed';
+import { HeaderText, TitleText } from '../components/StyledText';
+import { TextArea } from '../components/Text.Area';
+import { LinkButton } from '../components/Link.Button';
+import { PrimaryButton } from '../components/Primary.Button';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { backend } from "../constants/Backend";
-import { theme } from "../constants/Theme";
+import { backend } from '../constants/Backend';
+import { theme } from '../constants/Theme';
 
-import { useAppContext } from "../App.Provider";
-import { ThemeContext } from "../Theme.Provider";
+import { useAppContext } from '../App.Provider';
+import { ThemeContext } from '../Theme.Provider';
 
 const emojis = [
-  { face: require("../assets/images/happy.png"), value: "Buena" },
-  { face: require("../assets/images/regular.png"), value: "Regular" },
-  { face: require("../assets/images/sad.png"), value: "Mala" },
+  { face: require('../assets/images/happy.png'), value: 'Buena' },
+  { face: require('../assets/images/regular.png'), value: 'Regular' },
+  { face: require('../assets/images/sad.png'), value: 'Mala' },
 ];
 
-const messages = [{ topic: "Menu", text: "¿Cómo estuvo la comida de hoy?" }];
+const messages = [{ topic: 'Menu', text: '¿Cómo estuvo la comida de hoy?' }];
 
 export const SatisfactionScreen = ({ navigation, route }: any) => {
   const appContext = useAppContext();
   const { primaryColor } = useContext(ThemeContext);
 
-  const [selectedEmoji, setSelectedEmoji] = useState<string>("");
+  const [selectedEmoji, setSelectedEmoji] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [isBadReview, setIsBadReview] = useState(false);
-  const [comments, onChangeText] = useState("");
+  const [comments, onChangeText] = useState('');
 
   const submitResults = async () => {
-    if (selectedEmoji === "") {
-      alert("Debes seleccionar una opción");
+    if (selectedEmoji === '') {
+      alert('Debes seleccionar una opción');
       return;
     }
     setIsLoading(true);
@@ -53,27 +53,21 @@ export const SatisfactionScreen = ({ navigation, route }: any) => {
       campo: appContext.user.location,
       comentario: comments,
     };
-    await backend
-      .put("satisfaccion_usuario/satisfaccion/", data, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
-      .then(() => {
+    await backend.put('satisfaccion_usuario/satisfaccion/', data).then(() => {
+      setTimeout(() => {
+        setIsLoading(false);
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+        setIsSubmitted(true);
         setTimeout(() => {
-          setIsLoading(false);
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-          setIsSubmitted(true);
-          setTimeout(() => {
-            navigation.navigate("TabMenu");
-          }, 2000);
-        }, 1000);
-      });
+          navigation.navigate('TabMenu');
+        }, 2000);
+      }, 1000);
+    });
   };
 
   const handleEmojiPress = (emoji: string) => {
     setSelectedEmoji(emoji);
-    if (emoji !== "Buena") {
+    if (emoji !== 'Buena') {
       setIsBadReview(true);
     } else {
       setIsBadReview(false);
@@ -97,18 +91,18 @@ export const SatisfactionScreen = ({ navigation, route }: any) => {
     <View style={styles.container}>
       <DefaultView style={styles.title}>
         <HeaderText>
-          {isSubmitted ? "¡Gracias por tu aporte!" : message}
+          {isSubmitted ? '¡Gracias por tu aporte!' : message}
         </HeaderText>
-        <TitleText style={{ fontWeight: "400", textAlign: "center" }}>
+        <TitleText style={{ fontWeight: '400', textAlign: 'center' }}>
           {isSubmitted
-            ? "Tu experiencia ha sido enviada con exito."
-            : "Aportar con tu experiencia nos ayuda a mejorar"}
+            ? 'Tu experiencia ha sido enviada con exito.'
+            : 'Aportar con tu experiencia nos ayuda a mejorar'}
         </TitleText>
       </DefaultView>
 
       <DefaultView style={styles.emojiContainer}>
         {emojis.map((emoji) => (
-          <DefaultView style={{ alignItems: "center" }} key={Math.random()}>
+          <DefaultView style={{ alignItems: 'center' }} key={Math.random()}>
             <TextHolder key={Math.random()} style={styles.emojiBg}>
               <TouchableOpacity
                 onPress={() => {
@@ -132,7 +126,7 @@ export const SatisfactionScreen = ({ navigation, route }: any) => {
         ))}
       </DefaultView>
       {isSubmitted ? (
-        <DefaultView style={{ alignItems: "center" }}>
+        <DefaultView style={{ alignItems: 'center' }}>
           <MaterialCommunityIcons
             name="check-circle"
             size={100}
@@ -166,8 +160,8 @@ export const SatisfactionScreen = ({ navigation, route }: any) => {
           <LinkButton
             text="Tienes alguna sugerencia?"
             handlePress={() => {
-              navigation.navigate("Suggestions", {
-                topic: "Menu",
+              navigation.navigate('Suggestions', {
+                topic: 'Menu',
               });
             }}
           />
@@ -180,10 +174,10 @@ export const SatisfactionScreen = ({ navigation, route }: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-around",
+    justifyContent: 'space-around',
   },
   title: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   // emoji: {
   //   fontSize: 70,
@@ -193,9 +187,9 @@ const styles = StyleSheet.create({
     width: 100,
   },
   emojiContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   emojiBg: {
     borderRadius: 100,

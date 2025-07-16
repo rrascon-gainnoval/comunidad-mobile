@@ -18,11 +18,7 @@ export function useTriviasList() {
   const fetchTrivias = async () => {
     setIsLoading(true);
     await backend
-      .get('api/trivias/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get('api/trivias/')
       .then((response) => {
         setWasFetchError(false);
         if (!mounted) {
