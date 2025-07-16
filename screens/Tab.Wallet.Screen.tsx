@@ -88,17 +88,9 @@ export function TabWalletScreen({ navigation }: { navigation: any }) {
 
   const fetchTransactions = async () => {
     try {
-      const res = await backend.post(
-        '/users/get_detalle/',
-        {
-          id_empleado: appContext.user.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      );
+      const res = await backend.post('/users/get_detalle/', {
+        id_empleado: appContext.user.id,
+      });
       if (res.data && mounted) {
         setTransactionsByWeek([...res.data]);
       }

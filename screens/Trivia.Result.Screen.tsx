@@ -55,19 +55,11 @@ export const TriviaResultScreen = ({ route, navigation }: QuizScreenProps) => {
 
   const submitResults = async (points: number) => {
     await backend
-      .post(
-        `api/resultado_trivias/`,
-        {
-          coins_earned: points,
-          user: appContext.user.id,
-          trivia: triviaId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .post(`api/resultado_trivias/`, {
+        coins_earned: points,
+        user: appContext.user.id,
+        trivia: triviaId,
+      })
       .then(() => {})
       .catch(() => {})
       .finally(() => {

@@ -46,17 +46,9 @@ export function EventDetailsScreen({ navigation, route }: any) {
   const enrollEvent = async () => {
     setIsLoading(true);
     await backend
-      .post(
-        'api/inscripciones/',
-        {
-          event: event.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .post('api/inscripciones/', {
+        event: event.id,
+      })
       .then((res) => {
         setSuccess(true);
       })

@@ -91,18 +91,10 @@ export const ChangePasswordScreen = ({ navigation, route }: any) => {
     }
 
     await backend
-      .put(
-        `api/usuarios/contraseña/${appContext.user.id}/`,
-        {
-          password: password.new,
-          confirm_password: password.confirm,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .put(`api/usuarios/contraseña/${appContext.user.id}/`, {
+        password: password.new,
+        confirm_password: password.confirm,
+      })
       .then(() => {
         setSuccess(true);
         setTimeout(() => {

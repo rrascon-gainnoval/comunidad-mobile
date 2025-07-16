@@ -28,11 +28,7 @@ export function FunfactModal({ isVisible, onClose }: FunfactModalProps) {
 
   const fetchFunFact = async () => {
     try {
-      const res = await backend.get('api/sabiasque/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      });
+      const res = await backend.get('api/sabiasque/');
       setFunFacts([...res.data]);
     } catch (error) {}
   };

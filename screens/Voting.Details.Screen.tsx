@@ -53,32 +53,18 @@ export function VotingDetailsScreen({ route, navigation }: any) {
     }
 
     backend
-      .post(
-        'api/votacion/',
-        {
-          user: appContext.user.id,
-          choice: selectedOption.id,
-          poll: voting.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .post('api/votacion/', {
+        user: appContext.user.id,
+        choice: selectedOption.id,
+        poll: voting.id,
+      })
       .then(() => setShowAlert(true));
   };
 
   const fetchDetails = async () => {
-    backend
-      .get(`api/votaciones/${votingId}/`, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
-      .then((res) => {
-        setVoting(res.data);
-      });
+    backend.get(`api/votaciones/${votingId}/`).then((res) => {
+      setVoting(res.data);
+    });
   };
 
   useEffect(() => {

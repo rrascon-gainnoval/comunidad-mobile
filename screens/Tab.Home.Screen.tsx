@@ -54,11 +54,7 @@ export function TabHomeScreen({ navigation }: any) {
 
   const fetchAds = useCallback(async () => {
     await backend
-      .get('api/noticias/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get('api/noticias/')
       .then((response) => {
         setAdsUnavailable(false);
         if (mounted) {
@@ -77,11 +73,7 @@ export function TabHomeScreen({ navigation }: any) {
 
   const fetchVoting = async () => {
     await backend
-      .get('api/votaciones/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get('api/votaciones/')
       .then((res) => {
         if (mounted && res.data[0]) setVoting(res.data[0].title);
       })

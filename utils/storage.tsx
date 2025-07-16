@@ -1,6 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
+import { Alert } from 'react-native';
 
-const isFirstTime = "@ifFirstTime";
+const isFirstTime = '@ifFirstTime';
 
 export const getIsFirstTime = async () => {
   try {
@@ -18,7 +20,7 @@ export const setIsFirstTime = async (value: boolean) => {
   } catch (err) {}
 };
 
-const isTesting = "@isTesting";
+const isTesting = '@isTesting';
 
 export const getIsTesting = async () => {
   try {
@@ -36,7 +38,7 @@ export const storeIsTesting = async (value: boolean) => {
   } catch (err) {}
 };
 
-const privacyTermsKey = "@privacyTerms";
+const privacyTermsKey = '@privacyTerms';
 
 export const getIsPrivacyTermsSigned = async () => {
   try {
@@ -53,3 +55,24 @@ export const storeIsPrivacyTermsSigned = async (value: boolean) => {
     await AsyncStorage.setItem(privacyTermsKey, JSON.stringify(value));
   } catch (error) {}
 };
+
+export async function secureSave(key: string, value: string, errorMsg: string) {
+  try {
+    await SecureStore.setItemAsync(key, value);
+  } catch (error) {
+    Alert.alert(errorMsg);
+  }
+}
+
+export async function getSecureValueFor(key: string) {
+  let result = await SecureStore.getItemAsync(key);
+  return result;
+}
+
+export async function deleteSecureItem(key: string, errorMsg: string) {
+  try {
+    await SecureStore.deleteItemAsync(key);
+  } catch (error) {
+    Alert.alert(errorMsg);
+  }
+}

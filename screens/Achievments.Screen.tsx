@@ -29,29 +29,17 @@ export function AchievmentsScreen() {
 
   const fetchAchievments = async () => {
     try {
-      const res = await backend.get('/api/logros/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      });
+      const res = await backend.get('/api/logros/');
       setAchievments(res.data);
     } catch (error) {}
   };
 
   const handleClaim = async (achievment: UserAchievment) => {
     try {
-      await backend.post(
-        '/api/reclamar_logro/',
-        {
-          id_empleado: appContext.user.id,
-          achievement: achievment.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      );
+      await backend.post('/api/reclamar_logro/', {
+        id_empleado: appContext.user.id,
+        achievement: achievment.id,
+      });
       setModalVisible(true);
       setPointsGained(achievment.achievement.points);
     } catch (error) {}

@@ -27,9 +27,13 @@ import { Loader } from './components/Loader';
 
 import { ChangePasswordScreen } from './screens/Change.Password.Screen';
 import { ThemeProvider } from './Theme.Provider';
-import { storeIsPrivacyTermsSigned } from './utils/storage';
+import { secureSave, storeIsPrivacyTermsSigned } from './utils/storage';
 
 import { LogBox } from 'react-native';
+import {
+  setAccessTokenInterceptor,
+  setRefreshTokenInterceptor,
+} from './utils/backend';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -75,10 +79,21 @@ export default function App() {
     () => ({
       signIn: async (username: string, password: string) => {
         let user: any = null;
+
         await backend
           .post('api/token/', { username, password })
           .then(async (response) => {
-            const userData = response.data;
+            const { access, refresh, ...userData } = response.data;
+            setAccessTokenInterceptor(access);
+
+            await secureSave(
+              'refreshToken',
+              refresh,
+              'Hubo un problema al guardar el token de refrescamiento'
+            );
+            setRefreshTokenInterceptor(async () => {
+              //await signOut();
+            });
 
             user = {
               id: userData.id,
@@ -89,10 +104,6 @@ export default function App() {
               }`,
               points: userData.coins,
               xp: userData.xp,
-              token: {
-                access: userData.access,
-                refresh: userData.refresh,
-              },
               passChanged: userData.pass_changed,
               location: userData.location,
               location_id: userData.location_id,
@@ -101,6 +112,7 @@ export default function App() {
               apellido_materno_empleado: userData.second_lastname,
               fecha_nacimiento_empleado: userData.fecha_nacimiento_empleado,
               icon: userData.icon,
+              accessToken: access,
             };
             setUserSession(user);
             storeIsPrivacyTermsSigned(true);
@@ -122,7 +134,7 @@ export default function App() {
                   },
                   {
                     headers: {
-                      Authorization: `Bearer ${user.access}`,
+                      Authorization: `Bearer ${access}`,
                     },
                   }
                 );
@@ -172,6 +184,8 @@ export default function App() {
   const retreiveUserSession = async () => {
     let user = null;
     user = await getUserSession();
+    setAccessTokenInterceptor(user.accessToken);
+    setRefreshTokenInterceptor(() => {});
     dispatch({
       type: 'RETRIEVE',
       user: user,

@@ -38,11 +38,7 @@ export const RankingHome = () => {
     setLoading(true);
 
     await backend
-      .get(`api/puntuaciones/${selectedItem === 'all' ? '?campo=todos' : ''}`, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get(`api/puntuaciones/${selectedItem === 'all' ? '?campo=todos' : ''}`)
       .then((response) => {
         setRanking([...response.data]);
       })

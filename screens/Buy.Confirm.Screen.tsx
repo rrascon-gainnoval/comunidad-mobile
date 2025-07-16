@@ -42,15 +42,7 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
 
   const fetchUserDetails = async () => {
     await backend
-      .post(
-        'users/user_detail/',
-        { id_empleado: appContext.user.id },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .post('users/user_detail/', { id_empleado: appContext.user.id })
       .then((response) => {
         //if (mounted) {
         setUser(response.data);
@@ -64,17 +56,9 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
       return setError('¡ No tienes suficientes puntos !');
     }
     backend
-      .put(
-        'users/agregar_llave/',
-        {
-          id_empleado: appContext.user.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .put('users/agregar_llave/', {
+        id_empleado: appContext.user.id,
+      })
       .then(() => {
         subPoints();
       })
@@ -84,20 +68,12 @@ export const BuyConfirmScreen = ({ navigation }: any) => {
   const subPoints = async () => {
     setIsLoading(true);
     backend
-      .post(
-        'users/alter_points/',
-        {
-          id_empleado: appContext.user.id,
-          puntos: 10,
-          tipo: 'sub',
-          concepto: 'Compra de llave para cofre',
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .post('users/alter_points/', {
+        id_empleado: appContext.user.id,
+        puntos: 10,
+        tipo: 'sub',
+        concepto: 'Compra de llave para cofre',
+      })
       .then(() => {
         setTimeout(() => {
           setIsLoading(false);

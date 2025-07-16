@@ -38,11 +38,7 @@ export function EventsHomeScreen({ navigation }: any) {
 
   const fetchEvents = async () => {
     await backend
-      .get('api/eventos/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get('api/eventos/')
       .then((res) => {
         setEvents(res.data);
       })

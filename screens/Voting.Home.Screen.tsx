@@ -25,11 +25,7 @@ export function VotingHomeSrcreen({ navigation }: any) {
 
   const fetchVoting = async () => {
     await backend
-      .get('api/votaciones/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get('api/votaciones/')
       .then((res) => setVotingList(res.data))
       .catch((err) => {});
   };

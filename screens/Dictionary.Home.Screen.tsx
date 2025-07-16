@@ -37,11 +37,7 @@ export function DictionaryHomeScreen() {
       return;
     }
     backend
-      .get(`api/traducciones/?lenguaje=${selectedLanguage}`, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get(`api/traducciones/?lenguaje=${selectedLanguage}`)
       .then((res) => {
         isMounted && setTranslations([...res.data]);
         isMounted && setError(false);
@@ -56,11 +52,7 @@ export function DictionaryHomeScreen() {
 
   const fetchLanguages = async () => {
     backend
-      .get('api/lenguas/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get('api/lenguas/')
       .then((res) => {
         isMounted && setLanguages([...res.data]);
       })

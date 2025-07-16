@@ -37,11 +37,7 @@ export const SocialHomeScreen = () => {
       setIsFetching(true);
     }
     await backend
-      .get('api/estados/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get('api/estados/')
       .then((response) => {
         setMoods([...response.data]);
         setIsFetching(false);
@@ -58,18 +54,9 @@ export const SocialHomeScreen = () => {
   const handleShare = async () => {
     setIsLoading(true);
     await backend
-      .post(
-        'api/estados/',
-        {
-          body: selectedMood,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-            'Request-type': 'moodpost',
-          },
-        }
-      )
+      .post('api/estados/', {
+        body: selectedMood,
+      })
       .then(() => {
         setTimeout(() => {
           if (mounted) {
@@ -114,41 +101,23 @@ export const SocialHomeScreen = () => {
 
   const likePost = async (id_mood: string) => {
     await backend
-      .post(
-        'api/me_gusta/',
-        {
-          post: id_mood,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .post('api/me_gusta/', {
+        post: id_mood,
+      })
       .then(() => {
         fetchMoods();
       });
   };
 
   const dislikePost = async (user_like_id: string) => {
-    await backend
-      .delete(`api/me_gusta/${user_like_id}/`, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
-      .then(() => {
-        fetchMoods();
-      });
+    await backend.delete(`api/me_gusta/${user_like_id}/`).then(() => {
+      fetchMoods();
+    });
   };
 
   const fetchBirthdayList = async () => {
     await backend
-      .get('api/cumpleanios/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get('api/cumpleanios/')
       .then((res) => {
         if (mounted) {
           setBirthdayList([...res.data]);
@@ -161,17 +130,9 @@ export const SocialHomeScreen = () => {
 
   const sendCongrats = async (birth_day_user_id: string) => {
     await backend
-      .post(
-        'api/me_gusta/',
-        {
-          birth_day_user: birth_day_user_id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      )
+      .post('api/me_gusta/', {
+        birth_day_user: birth_day_user_id,
+      })
       .then(() => {
         fetchBirthdayList();
       })

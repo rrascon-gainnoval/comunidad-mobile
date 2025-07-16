@@ -117,15 +117,7 @@ export const ChestScreen = ({ navigation }: any) => {
 
   const openChest = async () => {
     try {
-      await backend.post(
-        'api/cofre/',
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${appContext.user.token.access}`,
-          },
-        }
-      );
+      await backend.post('api/cofre/', {});
       const finalPrize = Math.floor(Math.random() * awards.length);
 
       addPrize(awards[finalPrize].value, awards[finalPrize].type, finalPrize);
@@ -178,11 +170,7 @@ export const ChestScreen = ({ navigation }: any) => {
       data.xp = user.xp + points;
     }
     try {
-      await backend.patch(`api/usuarios/${appContext.user.id}/`, data, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      });
+      await backend.patch(`api/usuarios/${appContext.user.id}/`, data);
       if (isMounted) {
         setWinnerPrize(finalPrize);
         setIsOpen(true);
@@ -192,11 +180,7 @@ export const ChestScreen = ({ navigation }: any) => {
 
   const fetchUserDetails = async () => {
     await backend
-      .get(`api/usuarios/${appContext.user.id}/`, {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      })
+      .get(`api/usuarios/${appContext.user.id}/`)
       .then((response) => {
         if (isMounted) {
           setUser(response.data);
@@ -207,11 +191,7 @@ export const ChestScreen = ({ navigation }: any) => {
   const fetchStatus = async () => {
     setIsFetching(true);
     try {
-      await backend.get('api/cofre/', {
-        headers: {
-          Authorization: `Bearer ${appContext.user.token.access}`,
-        },
-      });
+      await backend.get('api/cofre/');
     } catch (error: any) {
       if (error?.response?.data) {
         setTimeout(moment(error.response.data).add(24, 'hours'));

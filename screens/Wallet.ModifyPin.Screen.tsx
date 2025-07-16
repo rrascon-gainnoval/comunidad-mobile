@@ -1,23 +1,23 @@
-import { Image, StyleSheet } from "react-native";
-import React from "react";
+import { Image, StyleSheet } from 'react-native';
+import React from 'react';
 
-import { View, Text } from "../components/Themed";
-import { TextInput } from "../components/Text.Input";
-import { PrimaryButton } from "../components/Primary.Button";
-import { PinInput } from "../components/Pin.Input";
-import { HeaderText, TitleText } from "../components/StyledText";
+import { View, Text } from '../components/Themed';
+import { TextInput } from '../components/Text.Input';
+import { PrimaryButton } from '../components/Primary.Button';
+import { PinInput } from '../components/Pin.Input';
+import { HeaderText, TitleText } from '../components/StyledText';
 
-import { backend } from "../constants/Backend";
-import { useAppContext } from "../App.Provider";
-import { errorColor } from "../constants/Colors";
-import { theme } from "../constants/Theme";
-import { UnavailableContent } from "../components/Unavailable.Content";
+import { backend } from '../constants/Backend';
+import { useAppContext } from '../App.Provider';
+import { errorColor } from '../constants/Colors';
+import { theme } from '../constants/Theme';
+import { UnavailableContent } from '../components/Unavailable.Content';
 
 export const WalletModifyPin = ({ navigation }: any) => {
   const appContext = useAppContext();
 
-  const [error, setError] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [isButtonLoading, setIsButtonLoading] = React.useState(false);
   const [pin, setPin] = React.useState<{
     pin1: string;
@@ -25,10 +25,10 @@ export const WalletModifyPin = ({ navigation }: any) => {
     pin3: string;
     pin4: string;
   }>({
-    pin1: "",
-    pin2: "",
-    pin3: "",
-    pin4: "",
+    pin1: '',
+    pin2: '',
+    pin3: '',
+    pin4: '',
   });
 
   const [isFinished, setIsFinished] = React.useState(false);
@@ -43,43 +43,35 @@ export const WalletModifyPin = ({ navigation }: any) => {
 
   const handleSubmit = async () => {
     if (
-      pin.pin1 === "" ||
-      pin.pin2 === "" ||
-      pin.pin3 === "" ||
-      pin.pin4 === ""
+      pin.pin1 === '' ||
+      pin.pin2 === '' ||
+      pin.pin3 === '' ||
+      pin.pin4 === ''
     ) {
-      setError("Ingresa los 4 digitos del NIP");
+      setError('Ingresa los 4 digitos del NIP');
       return;
     }
     if (!password) {
-      setError("Ingresa tu contraseña");
+      setError('Ingresa tu contraseña');
       return;
     }
     setIsButtonLoading(true);
 
     backend
-      .post("api/token/", {
+      .post('api/token/', {
         password: password,
         id_empleado: appContext.user.id,
       })
       .then((res) => {
-        const lastname = appContext.user.lastname.split(" ");
+        const lastname = appContext.user.lastname.split(' ');
         backend
-          .post(
-            "users/cambiar_nip/",
-            {
-              id_empleado: appContext.user.id,
-              nombre: appContext.user.name,
-              apellido_paterno: lastname[0],
-              apellido_materno: lastname[1],
-              pin: pin.pin1 + pin.pin2 + pin.pin3 + pin.pin4,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${appContext.user.token.access}`,
-              },
-            }
-          )
+          .post('users/cambiar_nip/', {
+            id_empleado: appContext.user.id,
+            nombre: appContext.user.name,
+            apellido_paterno: lastname[0],
+            apellido_materno: lastname[1],
+            pin: pin.pin1 + pin.pin2 + pin.pin3 + pin.pin4,
+          })
           .then(() => {
             setIsSuccess(true);
           })
@@ -94,7 +86,7 @@ export const WalletModifyPin = ({ navigation }: any) => {
           });
       })
       .catch((err) => {
-        setError("Contraseña incorrecta");
+        setError('Contraseña incorrecta');
       })
       .finally(() => {
         setIsButtonLoading(false);
@@ -108,7 +100,7 @@ export const WalletModifyPin = ({ navigation }: any) => {
           {isSuccess ? (
             <View>
               <Image
-                source={require("../assets/images/tsocial.png")}
+                source={require('../assets/images/tsocial.png')}
                 style={styles.img}
               />
               <HeaderText>Felicidades!</HeaderText>
@@ -155,7 +147,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   error: {
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
     paddingHorizontal: theme.paddingMd,
     color: errorColor,
     marginVertical: theme.marginY,
@@ -164,12 +156,12 @@ const styles = StyleSheet.create({
   img: {
     height: 200,
     width: 200,
-    alignSelf: "center",
+    alignSelf: 'center',
     marginTop: theme.marginY,
   },
   description: {
-    textAlign: "center",
-    fontWeight: "normal",
+    textAlign: 'center',
+    fontWeight: 'normal',
     marginBottom: 50,
   },
 });
