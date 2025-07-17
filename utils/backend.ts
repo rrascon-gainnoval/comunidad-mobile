@@ -27,11 +27,11 @@ export const setRefreshTokenInterceptor = (handleUnauthorized: () => void) => {
         try {
           const refresh = await getSecureValueFor('refreshToken');
 
-          const res = await backend.post('token/refresh/', {
+          const res = await backend.post('api/token/refresh/', {
             refresh,
           });
           const { access } = res.data;
-          //setAccessTokenInterceptor(access); se necesita implementar access token a todas las solicitudes
+          setAccessTokenInterceptor(access);
           originalRequest.headers.Authorization = 'Bearer ' + access;
           return backend(originalRequest);
         } catch (err) {
@@ -39,7 +39,6 @@ export const setRefreshTokenInterceptor = (handleUnauthorized: () => void) => {
             axios.isAxiosError(err) &&
             (err.response?.status === 401 || error.response.status === 403)
           ) {
-            //displayUnauthorizedAlert();
             return handleUnauthorized();
           }
         }

@@ -75,6 +75,29 @@ export default function App() {
 
   const [loginState, dispatch] = useReducer(loginReducer, initialLoginState);
 
+  const signOut = async () => {
+    const session = await getUserSession();
+    const token = await getPushToken();
+    if (token) {
+      try {
+        await backend.post(
+          'notificaciones/delete_device/',
+          {
+            user: session.id,
+            token: token,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${session.token.access}`,
+            },
+          }
+        );
+      } catch (error) {}
+    }
+    removeUserSession();
+    dispatch({ type: 'LOGOUT' });
+  };
+
   const authContext: any = useMemo(
     () => ({
       signIn: async (username: string, password: string) => {
@@ -92,7 +115,7 @@ export default function App() {
               'Hubo un problema al guardar el token de refrescamiento'
             );
             setRefreshTokenInterceptor(async () => {
-              //await signOut();
+              await signOut();
             });
 
             user = {
@@ -153,28 +176,7 @@ export default function App() {
           });
       },
 
-      signOut: async () => {
-        const session = await getUserSession();
-        const token = await getPushToken();
-        if (token) {
-          try {
-            await backend.post(
-              'notificaciones/delete_device/',
-              {
-                user: session.id,
-                token: token,
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${session.token.access}`,
-                },
-              }
-            );
-          } catch (error) {}
-        }
-        removeUserSession();
-        dispatch({ type: 'LOGOUT' });
-      },
+      signOut: signOut,
 
       user: loginState.user,
     }),
@@ -184,8 +186,13 @@ export default function App() {
   const retreiveUserSession = async () => {
     let user = null;
     user = await getUserSession();
-    setAccessTokenInterceptor(user.accessToken);
-    setRefreshTokenInterceptor(() => {});
+    if (user) {
+      setAccessTokenInterceptor(user.accessToken);
+      setRefreshTokenInterceptor(async () => {
+        await signOut();
+      });
+    }
+
     dispatch({
       type: 'RETRIEVE',
       user: user,
