@@ -20,7 +20,7 @@ import * as Device from 'expo-device';
 
 import useCachedResources from './hooks/useCachedResources';
 
-import { backend } from './constants/Backend';
+import { altatecaApi, backend } from './constants/Backend';
 
 import { Platform, UIManager } from 'react-native';
 import { Loader } from './components/Loader';
@@ -34,6 +34,7 @@ import {
   setAccessTokenInterceptor,
   setRefreshTokenInterceptor,
 } from './utils/backend';
+import { User, UserSession } from './types';
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -107,6 +108,7 @@ export default function App() {
           .post('api/token/', { username, password })
           .then(async (response) => {
             const { access, refresh, ...userData } = response.data;
+
             setAccessTokenInterceptor(access);
 
             await secureSave(
@@ -183,6 +185,39 @@ export default function App() {
     [loginState.user]
   );
 
+  const getUserWithUpdatedLocation = async ({
+    user,
+  }: {
+    user: UserSession;
+  }): Promise<UserSession> => {
+    try {
+      const res = await altatecaApi.get(
+        `empleados/registro_nomina/?codigo_empleado=${user.username}`
+        //`empleados/registro_nomina/?codigo_empleado=${'150060'}` // DEBUG ONLY
+      );
+
+      if (res.data.length > 0) {
+        const campoDeNomina = res.data[0].campo;
+        if (campoDeNomina !== user.locationName) {
+          try {
+            const res = await backend.put('api/campo_usuario/', {
+              campo: campoDeNomina,
+            });
+            const { location_name, location_id } = res.data;
+            if (location_name && location_id) {
+              return {
+                ...user,
+                location_id: location_id,
+                locationName: location_name,
+              };
+            }
+          } catch (error) {}
+        }
+      }
+    } catch (error) {}
+    return user;
+  };
+
   const retreiveUserSession = async () => {
     let user = null;
     user = await getUserSession();
@@ -191,6 +226,10 @@ export default function App() {
       setRefreshTokenInterceptor(async () => {
         await signOut();
       });
+      user = await getUserWithUpdatedLocation({
+        user,
+      });
+      await setUserSession(user);
     }
 
     dispatch({
