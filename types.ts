@@ -269,3 +269,21 @@ export interface UserAchievment {
   progress: number;
   achievement: Achievment;
 }
+
+export interface UserSession {
+  id: string;
+  username: string;
+  name: string;
+  lastname: string;
+  points: number;
+  xp: number;
+  passChanged: boolean;
+  location: string;
+  location_id: string;
+  locationName: string;
+  apellido_paterno_empleado: string;
+  apellido_materno_empleado: string;
+  fecha_nacimiento_empleado: string;
+  icon: string;
+  accessToken: string;
+}
